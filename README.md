@@ -1,5 +1,5 @@
 # Data-Structures-and-Algorithms
-Data Structures and Algorithms by golang
+Algorithms & Data Structures in Go
 
 ## 二叉树
 ### [数组存储](BinaryTree/array.go)
