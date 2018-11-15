@@ -2,4 +2,11 @@
 Data Structures and Algorithms by golang
 
 ## 二叉树
-### 数组存储(2018-11-15)
+### [数组存储](BinaryTree/array.go)
+* 左子节点索引：2*(父结点索引)+1
+* 右子节点索引：2*(父结点索引)+2
+### 链表存储
+
+## [一致性hash算法](ConsistentHash/consistenthash.go)
+* 所有的节点以及其虚拟节点形成一个圆环，根据节点hash值顺序排列成圆环
+* 对请求的key求hash值，找到在圆环中第一个大于该hash值的节点，就让该结点服务
