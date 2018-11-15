@@ -45,9 +45,14 @@ func (t *Tree) Dump() {
 	log.Println(t.nodes)
 }
 
-func NewTree(size int) *Tree {
-	return &Tree{
+// 同时初始化根结点
+func NewTree(size int, root Node) (tree *Tree) {
+	tree = &Tree{
 		size:  size,
 		nodes: make([]Node, size),
 	}
+
+	tree.nodes[0] = root
+
+	return
 }
