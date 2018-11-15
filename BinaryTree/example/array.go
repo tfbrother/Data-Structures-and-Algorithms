@@ -17,4 +17,6 @@ func main() {
 	tree.AddNode(2, 1, 2)
 
 	tree.Dump()
+	tree.DeleteNode(1)
+	tree.Dump()
 }
