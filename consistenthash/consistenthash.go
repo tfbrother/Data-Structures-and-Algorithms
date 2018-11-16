@@ -1,5 +1,5 @@
 // 一致性hash算法
-package ConsistentHash
+package consistenthash
 
 import (
 	"hash/crc32"
