@@ -73,7 +73,7 @@ func (s *SequenceList) InsertIndex(index int, ele *Element) (err error) {
 		return nil
 	}
 
-	//头部或者中间插入，要把之前的元素依次往后移动一位
+	//头部或者中间插入，则需要把index及其之后所有的元素后移一位
 	// fix bug 从最后一位倒序移动
 	for i := s.len; i > index; i-- {
 		s.ele[i] = s.ele[i-1]
@@ -82,6 +82,23 @@ func (s *SequenceList) InsertIndex(index int, ele *Element) (err error) {
 	s.len++
 
 	return nil
+}
+
+// 删除元素
+func (s *SequenceList) DelIndex(index int) (ele *Element, err error) {
+	if index >= s.len || index < 0 {
+		return nil, errors.New("index error")
+	}
+
+	//头部或者中间删除，则需要前移index之后的所有元素
+	ele = s.ele[index]
+	for i := index; i < s.len; i++ {
+		s.ele[i] = s.ele[i+1]
+	}
+	s.ele[s.len-1] = nil
+	s.len--
+
+	return
 }
 
 // 遍历队列
