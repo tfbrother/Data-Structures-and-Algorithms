@@ -75,6 +75,7 @@ func (s *SequenceList) InsertIndex(index int, ele *Element) (err error) {
 
 	//头部或者中间插入，要把之前的元素依次往后移动一位
 	for i := index; i <= s.len; i++ {
+		// 此处有严重bug，因为是指针类型，是的index之后的所有元素值都变成一样了
 		s.ele[i+1] = s.ele[i]
 	}
 	s.ele[index] = ele
