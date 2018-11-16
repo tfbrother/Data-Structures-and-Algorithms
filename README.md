@@ -9,6 +9,10 @@ Algorithms & Data Structures in Go
 
 ## [环形队列](Queue/ring.go)
 * 核心是注意tail可能比head小
+* 先入先出（FIFO）
+
+## [栈](Stack/stack.go)
+* 后入先出（LIFO）
 
 ## [一致性hash算法](ConsistentHash/consistenthash.go)
 * 所有的节点以及其虚拟节点形成一个圆环，根据节点hash值顺序排列成圆环
