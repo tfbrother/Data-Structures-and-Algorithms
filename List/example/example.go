@@ -28,5 +28,5 @@ func main() {
 
 	seq.InsertIndex(1, &ele5)
 
-	seq.Dump() // 15222
+	seq.Dump() // 15234
 }
