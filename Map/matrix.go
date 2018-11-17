@@ -1,6 +1,8 @@
 package Map
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 图结点类型
 type Node struct {
@@ -82,9 +84,56 @@ func (g *Gmap) DepthFirstTraverse(startIndex int) {
 	return
 }
 
-// 广度优先遍历
+// 广度优先遍历(核心是要实现分层)
 func (g *Gmap) BreadthFirstTraverse(startIndex int) {
+	if startIndex < 0 || startIndex > g.capacity {
+		return
+	}
 
+	if g.nodeCount != g.capacity { // 图并不完整
+		return
+	}
+
+	fmt.Print(g.nodes[startIndex].value, "(", startIndex, ")")
+	//设置该顶点已经访问过了
+	g.nodes[startIndex].isAccess = true
+	// 保存符合条件的同一层的顶点索引
+	var nodeIndexs []int
+	nodeIndexs = make([]int, 0, g.capacity)
+
+	for i := 0; i < g.capacity; i++ {
+		if g.matrix[i*g.capacity+startIndex] != 0 && g.nodes[i].isAccess != true { // 找到一个满足条件第一个边，放入集合，先后继续找
+			nodeIndexs = append(nodeIndexs, i)
+			g.nodes[i].isAccess = true
+			fmt.Print(g.nodes[i].value, "(", i, ")")
+		}
+	}
+
+	if len(nodeIndexs) > 0 {
+		g.breadthFirstTraverseImpl(nodeIndexs)
+	}
+	return
+}
+
+func (g *Gmap) breadthFirstTraverseImpl(nodeIndexs []int) {
+	// 保存符合条件的同一层的顶点索引
+	var curIndexs []int
+	curIndexs = make([]int, 0, g.capacity)
+	for i := 0; i < len(nodeIndexs); i++ {
+		for j := 0; j < g.capacity; j++ {
+			if g.matrix[j*g.capacity+nodeIndexs[i]] != 0 && g.nodes[j].isAccess != true { // 找到一个满足条件第一个边，放入集合，先后继续找
+				curIndexs = append(curIndexs, j)
+				g.nodes[j].isAccess = true
+				fmt.Print(g.nodes[j].value, "(", j, ")")
+			}
+		}
+	}
+
+	if len(curIndexs) == 0 {
+		return
+	}
+
+	g.breadthFirstTraverseImpl(curIndexs)
 }
 
 // 初始化一个gmap
