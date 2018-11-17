@@ -24,6 +24,8 @@ Algorithms & Data Structures in Go
 
 ## 图
 ### [邻接矩阵存储](Map/matrix.go)
+* 深度遍历（递归）
+* 广度遍历（分层，递归）
 
 
 ## [一致性hash算法](consistenthash/consistenthash.go)
