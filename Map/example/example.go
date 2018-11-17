@@ -1,6 +1,9 @@
 package main
 
-import "github.com/tfbrother/Data-Structures-and-Algorithms/Map"
+import (
+	"fmt"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/Map"
+)
 
 var (
 	node1, node2, node3, node4, node5, node6, node7, node8 Map.Node
@@ -42,4 +45,8 @@ func main() {
 	gmap.Dump()
 
 	gmap.DepthFirstTraverse(0)
+	fmt.Println()
+	gmap.ResetNode()
+	gmap.BreadthFirstTraverse(0)
+	fmt.Println()
 }
