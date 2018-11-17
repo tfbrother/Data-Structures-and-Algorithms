@@ -59,6 +59,33 @@ func (g *Gmap) Dump() {
 	}
 }
 
+// 深度优先遍历
+func (g *Gmap) DepthFirstTraverse(startIndex int) {
+	if startIndex < 0 || startIndex > g.capacity {
+		return
+	}
+
+	if g.nodeCount != g.capacity { // 图并不完整
+		return
+	}
+
+	fmt.Print(g.nodes[startIndex].value, "(", startIndex, ")")
+	//设置该顶点已经访问过了
+	g.nodes[startIndex].isAccess = true
+	for i := 0; i < g.capacity; i++ {
+		if g.matrix[i*g.capacity+startIndex] != 0 && g.nodes[i].isAccess != true { // 找到一个满足条件第一个边，然后递归搜索下去
+			g.DepthFirstTraverse(i)
+		}
+	}
+
+	return
+}
+
+// 广度优先遍历
+func (g *Gmap) BreadthFirstTraverse(startIndex int) {
+
+}
+
 // 初始化一个gmap
 func NewGmap(capacity int) *Gmap {
 	return &Gmap{
