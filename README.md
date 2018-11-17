@@ -22,6 +22,9 @@ Algorithms & Data Structures in Go
 #### 循环链表
 #### 双向链表
 
+## 图
+### 邻接矩阵存储(Map/matrix.go)
+
 
 ## [一致性hash算法](consistenthash/consistenthash.go)
 * 所有的节点以及其虚拟节点形成一个圆环，根据节点hash值顺序排列成圆环
