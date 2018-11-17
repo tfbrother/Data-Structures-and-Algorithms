@@ -30,4 +30,7 @@ func main() {
 
 	seq.DelIndex(2)
 	seq.Dump() // 1534
+
+	ele5 = 8   // 使用引用传递时，外部修改了值会影响内部，慎重使用
+	seq.Dump() // 1834
 }
