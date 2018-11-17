@@ -23,7 +23,7 @@ Algorithms & Data Structures in Go
 #### 双向链表
 
 ## 图
-### 邻接矩阵存储(Map/matrix.go)
+### [邻接矩阵存储](Map/matrix.go)
 
 
 ## [一致性hash算法](consistenthash/consistenthash.go)
