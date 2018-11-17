@@ -40,4 +40,6 @@ func main() {
 	gmap.SetUnGraphValue(6, 7, 1)
 
 	gmap.Dump()
+
+	gmap.DepthFirstTraverse(0)
 }

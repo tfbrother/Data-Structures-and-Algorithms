@@ -26,7 +26,8 @@ func (g *Gmap) AddNode(node Node) bool {
 		return false
 	}
 
-	g.nodes = append(g.nodes, node)
+	//g.nodes = append(g.nodes, node)	//此处有bug
+	g.nodes[g.nodeCount] = node
 	g.nodeCount++
 	return true
 }
