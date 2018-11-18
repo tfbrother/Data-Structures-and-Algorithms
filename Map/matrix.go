@@ -145,7 +145,7 @@ func (g *Gmap) breadthFirstTraverseImpl(nodeIndexs []int) {
 	g.breadthFirstTraverseImpl(curIndexs)
 }
 
-// 普里姆最小生成数算法
+// 普利姆最小生成数算法
 func (g *Gmap) PrimTree(startIndex int) {
 	// 获取结点所有的边，找到最小的边，然后以这条边的另一个顶点为基础找最小的边，依次下去，直到找到的边数=顶点数-1就完毕。
 	var (
