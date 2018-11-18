@@ -47,7 +47,11 @@ func main() {
 	fmt.Println("广度优先")
 	gmap.BreadthFirstTraverse(0)
 	fmt.Println()
+	//gmap.ResetNode()
+	//fmt.Println("普里姆算法最小生成数")
+	//gmap.PrimTree(0)
+
+	fmt.Println("克鲁斯卡最小生成数算法")
 	gmap.ResetNode()
-	fmt.Println("普里姆算法最小生成数")
-	gmap.PrimTree(0)
+	gmap.KruskalTree()
 }
