@@ -27,6 +27,7 @@ Algorithms & Data Structures in Go
 * 深度遍历（递归）
 * 广度遍历（分层，递归）
 * 最小生成树普利姆(Prim)算法
+* 最小生成树克鲁斯卡尔(Kruskal)算法
 
 
 ## [一致性hash算法](consistenthash/consistenthash.go)
