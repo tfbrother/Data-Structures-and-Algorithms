@@ -165,31 +165,35 @@ func (g *Gmap) PrimTree(startIndex int) {
 		for i := 0; i < g.capacity; i++ {
 			if g.matrix[i*g.capacity+nodeIndex] != 0 && g.nodes[i].isAccess != true { // 找到一个满足条件第一个边，放入集合，先后继续找
 				edges = append(edges, Edge{nodeIndex, i, g.matrix[i*g.capacity+nodeIndex], false})
+
 			}
 		}
 
-		//fmt.Println(edges)
 		// 返回一条最小的边索引
 		minEdgeIndex = g.getMinEdge(edges)
+
 		edge = edges[minEdgeIndex]
 		fmt.Println(edge.nodeIndexA, "====", edge.nodeIndexB, "(", edge.weight, ")")
 		edges[minEdgeIndex].isSelected = true
 		g.edges = append(g.edges, edges[minEdgeIndex])
+
+		//fmt.Println(g.edges)
 		//fmt.Println(edges)
-		//fmt.Println(g.nodes)
 		nodeIndex = edge.nodeIndexB
 		g.nodes[nodeIndex].isAccess = true
+
 	}
 }
 
 // 获取最小的边
 func (g *Gmap) getMinEdge(edges []Edge) (index int) {
+	// TODO(tfbrother)如果没有找到最小边，一定要返回-1。因为默认值0是有意义的索引。花了半天时间才找到这个bug，哭
+	index = -1
 	var edge, minEdge Edge
 
 	for i := 0; i < len(edges); i++ {
 		edge = edges[i]
-		// TODO(tfbrother)避免形成闭环图，尤其是is.Access的检查，此处花了1个小时调试才找到问题
-		if edge.isSelected == true || g.nodes[edge.nodeIndexB].isAccess == true {
+		if edge.isSelected == true {
 			continue
 		}
 
@@ -201,8 +205,6 @@ func (g *Gmap) getMinEdge(edges []Edge) (index int) {
 			index = i
 		}
 	}
-
-	//fmt.Println(minEdge, index)
 
 	return
 }
