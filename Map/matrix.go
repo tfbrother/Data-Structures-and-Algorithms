@@ -179,6 +179,8 @@ func (g *Gmap) PrimTree(startIndex int) {
 
 		//fmt.Println(g.edges)
 		//fmt.Println(edges)
+		// 下一次遍历这个顶点所有的边，因为是无向图，不能重复遍历，比如遍历A时AB边已经放入待选边，
+		// 遍历B时，BA边就不能再放入待选边集合了
 		nodeIndex = edge.nodeIndexB
 		g.nodes[nodeIndex].isAccess = true
 
