@@ -171,6 +171,9 @@ func (g *Gmap) PrimTree(startIndex int) {
 
 		// 返回一条最小的边索引
 		minEdgeIndex = g.getMinEdge(edges)
+		if minEdgeIndex == -1 {
+			break
+		}
 
 		edge = edges[minEdgeIndex]
 		fmt.Println(edge.nodeIndexA, "====", edge.nodeIndexB, "(", edge.weight, ")")
@@ -205,6 +208,89 @@ func (g *Gmap) getMinEdge(edges []Edge) (index int) {
 		} else if minEdge.weight > edge.weight {
 			minEdge = edge
 			index = i
+		}
+	}
+
+	return
+}
+
+type nodeSet []int
+
+// 克鲁斯卡尔最小生成树算法
+func (g *Gmap) KruskalTree() {
+	var (
+		edges           []Edge // 保存所有的边集合
+		edgeSelectCount int
+		minEdgeIndex    int
+		sets            []nodeSet
+		edgesSelected   []Edge
+	)
+
+	minEdgeIndex = -1
+	edges = make([]Edge, 0, 2*g.capacity)
+	sets = make([]nodeSet, 0, g.capacity)
+	edgesSelected = make([]Edge, 0, g.capacity)
+
+	// 1.取出所有的边
+	for i := 0; i < g.capacity; i++ {
+		for j := i + 1; j < g.capacity; j++ {
+			if g.matrix[i*g.capacity+j] != 0 {
+				edges = append(edges, Edge{i, j, g.matrix[i*g.capacity+j], false})
+			}
+		}
+	}
+	//fmt.Println(edges)
+
+	for {
+		if edgeSelectCount == g.capacity-1 {
+			break
+		}
+
+		// 2.获取最小边
+		minEdgeIndex = g.getMinEdge(edges)
+		if minEdgeIndex == -1 {
+			break
+		}
+
+		edges[minEdgeIndex].isSelected = true
+		// 3.找出连接最小边的点，以及点所在的集合
+		nodeA := edges[minEdgeIndex].nodeIndexA
+		nodeB := edges[minEdgeIndex].nodeIndexB
+
+		// 4.找出最小所在点的集合
+		labelA := g.isInSet(sets, nodeA)
+		labelB := g.isInSet(sets, nodeB)
+
+		// 5.根据集合的不同，进行不同处理
+		if labelA == -1 && labelB == -1 {
+			sets = append(sets, []int{nodeA, nodeB})
+		} else if labelA != -1 && labelB == -1 { // 把B点放入A点所在集合
+			sets[labelA] = append(sets[labelA], nodeB)
+		} else if labelA == -1 && labelB != -1 { // 把A点放入B点所在集合
+			sets[labelB] = append(sets[labelB], nodeA)
+		} else if labelA != 1 && labelB != 1 && labelA != labelB { // 合并两个集合
+			sets[labelA] = append(sets[labelA], sets[labelB]...)
+			// 切片中删除一个元素sets[labelB]
+			sets = append(sets[:labelB], sets[labelB+1:]...)
+		} else if labelA != 1 && labelB != 1 && labelA == labelB {
+			continue
+		}
+
+		edgesSelected = append(edgesSelected, edges[minEdgeIndex])
+		edgeSelectCount++
+	}
+	fmt.Println(edgesSelected)
+	return
+}
+
+func (g *Gmap) isInSet(sets []nodeSet, nodeIndex int) (index int) {
+	index = -1
+	for i := 0; i < len(sets)-1; i++ {
+		for j := 0; j < len(sets[i]); j++ {
+			if sets[i][j] == nodeIndex {
+				index = i
+				return
+			}
 		}
 	}
 
