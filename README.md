@@ -1,6 +1,9 @@
 # Data-Structures-and-Algorithms
 Algorithms & Data Structures in Go
 
+![大纲](https://github.com/tfbrother/Data-Structures-and-Algorithms/blob/master/xmind.jpg?raw=true)
+
+# 数据结构
 ## 二叉树
 ### [数组存储](BinaryTree/array.go)
 * 左子节点索引：2*(父结点索引)+1
@@ -29,6 +32,14 @@ Algorithms & Data Structures in Go
 * 最小生成树普利姆(Prim)算法
 * 最小生成树克鲁斯卡尔(Kruskal)算法
 
+# 算法
+## 排序
+### 冒泡排序
+### 插入排序
+### 快速排序
+### 合并排序
+### 选择排序
+### 堆排序
 
 ## [一致性hash算法](consistenthash/consistenthash.go)
 * 所有的节点以及其虚拟节点形成一个圆环，根据节点hash值顺序排列成圆环
