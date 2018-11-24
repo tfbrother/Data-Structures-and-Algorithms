@@ -35,10 +35,10 @@ Algorithms & Data Structures in Go
 # 算法
 ## 排序
 ### [冒泡排序](algorithms/sorting/bubble.go)
-### 插入排序
-### 快速排序
-### 合并排序
-### 选择排序
+### [插入排序](algorithms/sorting/insertion.go)
+### [快速排序](algorithms/sorting/quick.go)
+### [合并排序](algorithms/sorting/merge.go)
+### [选择排序](algorithms/sorting/selection.go)
 ### 堆排序
 
 ## [一致性hash算法](consistenthash/consistenthash.go)
