@@ -45,7 +45,11 @@ func main() {
 
 	arr5 := util.GenrateRandomArray(10, 20, 50)
 	fmt.Println(arr5)
-	sorting.QuickSort(arr5)
+	sorting.QuickSort1(arr5)
 	fmt.Println(arr5)
 
+	arr6 := util.GenrateRandomArray(30, 1, 2)
+	fmt.Println(arr6)
+	sorting.QuickSort2(arr6)
+	fmt.Println(arr6)
 }
