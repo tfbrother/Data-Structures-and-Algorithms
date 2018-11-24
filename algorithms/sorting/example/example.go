@@ -42,4 +42,10 @@ func main() {
 	fmt.Println(arr3)
 	arr4 := sorting.MergeSort(arr3)
 	fmt.Println(arr4)
+
+	arr5 := util.GenrateRandomArray(10, 20, 50)
+	fmt.Println(arr5)
+	sorting.QuickSort(arr5)
+	fmt.Println(arr5)
+
 }
