@@ -37,4 +37,9 @@ func main() {
 	fmt.Println(arr2)
 	sorting.InsertionSortNew(arr2)
 	fmt.Println(arr2)
+
+	arr3 := util.GenrateRandomArray(10, 20, 50)
+	fmt.Println(arr3)
+	arr4 := sorting.MergeSort(arr3)
+	fmt.Println(arr4)
 }
