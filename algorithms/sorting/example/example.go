@@ -28,4 +28,8 @@ func main() {
 
 	fmt.Println(arr)
 
+	arr1 := util.GenrateRandomArray(10, 20, 50)
+	fmt.Println(arr1)
+	sorting.InsertionSort(arr1)
+	fmt.Println(arr1)
 }
