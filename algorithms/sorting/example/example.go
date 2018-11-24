@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/algorithms/sorting"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/algorithms/sorting/util"
 )
 
 func main() {
@@ -21,7 +22,8 @@ func main() {
 	sorting.BubbleUpgrade(bubbleArr2, 0)
 	fmt.Println(bubbleArr2)
 
-	arr := []int{1, 4, 5, 7, 2, 3, 8, 10, 20, 8, 7}
+	arr := util.GenrateRandomArray(10, 100, 200)
+	fmt.Println(arr)
 	sorting.SelectSort(arr)
 
 	fmt.Println(arr)
