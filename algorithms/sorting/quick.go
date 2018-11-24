@@ -112,7 +112,7 @@ func QuickSort3(arr []int) {
 	}
 
 	i, j := partition3(arr)
-	QuickSort1(arr[0 : i+1])
+	QuickSort1(arr[0:i])
 	QuickSort1(arr[j:])
 
 	return
