@@ -50,6 +50,6 @@ func main() {
 
 	arr6 := util.GenrateRandomArray(30, 1, 2)
 	fmt.Println(arr6)
-	sorting.QuickSort2(arr6)
+	sorting.QuickSort3(arr6)
 	fmt.Println(arr6)
 }

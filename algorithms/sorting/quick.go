@@ -103,3 +103,42 @@ func partition2(arr []int) (i int) {
 	arr[0], arr[j] = arr[j], arr[0]
 	return j
 }
+
+// 针对有很多重复元素情况的优化版本
+// 三路快速排序算法
+func QuickSort3(arr []int) {
+	if len(arr) <= 1 {
+		return
+	}
+
+	i, j := partition3(arr)
+	QuickSort1(arr[0 : i+1])
+	QuickSort1(arr[j:])
+
+	return
+}
+
+// 采用三路快速排序法，将相等的元素近似平均分部在左右两个部分
+func partition3(arr []int) (int, int) {
+	rand.Seed(time.Now().UnixNano())
+	r := rand.Int() % len(arr)
+
+	arr[0], arr[r] = arr[r], arr[0]
+	i, j, k := 0, 1, len(arr)
+
+	for j < k {
+		if arr[j] < arr[0] {
+			arr[i+1], arr[j] = arr[j], arr[i+1]
+			i++
+			j++
+		} else if arr[j] > arr[0] {
+			arr[k-1], arr[j] = arr[j], arr[k-1]
+			k--
+		} else if arr[j] == arr[0] {
+			j++
+		}
+	}
+
+	arr[0], arr[i] = arr[i], arr[0]
+	return i, j
+}
