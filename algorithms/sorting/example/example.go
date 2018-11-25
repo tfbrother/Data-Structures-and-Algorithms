@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	var myarr []int
 	// 升序
 	bubbleArr := []int{1, 8, 7, 5, 10, 32, 48}
 	sorting.Bubble(bubbleArr, 0)
@@ -52,4 +53,16 @@ func main() {
 	fmt.Println(arr6)
 	sorting.QuickSort3(arr6)
 	fmt.Println(arr6)
+
+	// 堆排序
+	myarr = util.GenrateRandomArray(30, 10, 100)
+	fmt.Println(myarr)
+	myHeap := sorting.NewMaxHeap(30)
+	for _, v := range myarr {
+		myHeap.Insert(v)
+	}
+	myHeap.Dump()
+	myHeap.Delete()
+	myHeap.Dump()
+
 }
