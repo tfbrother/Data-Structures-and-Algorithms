@@ -1,11 +1,11 @@
 package main
 
-import "github.com/tfbrother/Data-Structures-and-Algorithms/Queue"
+import "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/queue"
 
 func main() {
-	var capacity, i Queue.Node
+	var capacity, i queue.Node
 	capacity = 10
-	ring := Queue.NewRingQueue(int(capacity))
+	ring := queue.NewRingQueue(int(capacity))
 	for i = 0; i < capacity; i++ {
 		ring.PushNode(i)
 	}

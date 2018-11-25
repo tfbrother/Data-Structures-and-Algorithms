@@ -1,5 +1,5 @@
 // 顺序表
-package List
+package list
 
 import (
 	"errors"

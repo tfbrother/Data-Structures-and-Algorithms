@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/tfbrother/Data-Structures-and-Algorithms/Stack"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/stack"
 )
 
 func main() {
-	var capacity, i Stack.Node
+	var capacity, i stack.Node
 	capacity = 10
-	s := Stack.NewStack(int(capacity))
+	s := stack.NewStack(int(capacity))
 	for i = 0; i < capacity; i++ {
 		s.PushNode(i)
 	}

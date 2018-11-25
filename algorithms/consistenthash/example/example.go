@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/tfbrother/Data-Structures-and-Algorithms/consistenthash"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/algorithms/consistenthash"
 	"strconv"
 )
 

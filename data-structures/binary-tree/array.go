@@ -1,5 +1,5 @@
 // 二叉树，采用数组来存储
-package BinaryTree
+package binary_tree
 
 import (
 	"errors"

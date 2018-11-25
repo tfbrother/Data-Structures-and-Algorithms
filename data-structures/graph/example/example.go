@@ -2,22 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/tfbrother/Data-Structures-and-Algorithms/Map"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
 )
 
 var (
-	node1, node2, node3, node4, node5, node6 Map.Node
-	gmap                                     *Map.Gmap
+	node1, node2, node3, node4, node5, node6 graph.Node
+	gmap                                     *graph.Gmap
 )
 
 func main() {
-	gmap = Map.NewGmap(6)
-	node1 = Map.NewNode("A")
-	node2 = Map.NewNode("B")
-	node3 = Map.NewNode("C")
-	node4 = Map.NewNode("D")
-	node5 = Map.NewNode("E")
-	node6 = Map.NewNode("F")
+	gmap = graph.NewGmap(6)
+	node1 = graph.NewNode("A")
+	node2 = graph.NewNode("B")
+	node3 = graph.NewNode("C")
+	node4 = graph.NewNode("D")
+	node5 = graph.NewNode("E")
+	node6 = graph.NewNode("F")
 
 	gmap.AddNode(node1)
 	gmap.AddNode(node2)

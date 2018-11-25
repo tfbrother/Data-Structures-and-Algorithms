@@ -1,5 +1,5 @@
 // 环形队列(采用顺序表数组存储)
-package Queue
+package queue
 
 import "log"
 
