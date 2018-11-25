@@ -39,7 +39,7 @@ Algorithms & Data Structures in Go
 ### [快速排序](algorithms/sorting/quick.go)
 ### [合并排序](algorithms/sorting/merge.go)
 ### [选择排序](algorithms/sorting/selection.go)
-### 堆排序
+### [堆排序](algorithms/sorting/heap.go)
 
 ## [一致性hash算法](algorithms/consistenthash/consistenthash.go)
 * 所有的节点以及其虚拟节点形成一个圆环，根据节点hash值顺序排列成圆环
