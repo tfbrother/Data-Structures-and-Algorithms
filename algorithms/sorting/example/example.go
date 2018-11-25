@@ -6,6 +6,10 @@ import (
 	"github.com/tfbrother/Data-Structures-and-Algorithms/util"
 )
 
+var (
+	myarr []int
+)
+
 func main() {
 	// 升序
 	bubbleArr := []int{1, 8, 7, 5, 10, 32, 48}
@@ -52,4 +56,12 @@ func main() {
 	fmt.Println(arr6)
 	sorting.QuickSort3(arr6)
 	fmt.Println(arr6)
+
+	// 堆排序
+	fmt.Println("==========堆排序===========")
+	myarr = util.GenrateRandomArray(30, 10, 100)
+	fmt.Println(myarr)
+	sorting.HeapSort(myarr)
+
+	fmt.Println(myarr)
 }
