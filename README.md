@@ -14,6 +14,9 @@ Algorithms & Data Structures in Go
 * 核心是注意tail可能比head小
 * 先入先出（FIFO）
 
+## [堆](data-structures/head/heap.go)
+* 最大堆/最小堆
+
 ## [栈](data-structures/stack/stack.go)
 * 后入先出（LIFO）
 
