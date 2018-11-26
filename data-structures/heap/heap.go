@@ -33,6 +33,7 @@ func (m *maxHeap) Insert(item int) error {
 	return nil
 }
 
+// 删除的是堆的根结点，对于最小堆来说，就是最小值，对于最大堆来说就是最小值，这也就是可以利用堆排序的原理。
 func (m *maxHeap) Delete() (item int, err error) {
 	if m.count == 0 {
 		return 0, errors.New("heap is empty")
