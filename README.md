@@ -10,11 +10,16 @@ Algorithms & Data Structures in Go
 * 右子节点索引：2*(父结点索引)+2
 ### 链表存储
 
+## 二叉搜索树
+### [链表存储](data-structures/binary-search-tree/bst.go)
+* 主要是理解递归算法
+* 添加和遍历都是用的递归
+
 ## [环形队列](data-structures/queue/ring.go)
 * 核心是注意tail可能比head小
 * 先入先出（FIFO）
 
-## [堆](data-structures/head/heap.go)
+## [堆](data-structures/heap/heap.go)
 * 最大堆/最小堆
 
 ## [栈](data-structures/stack/stack.go)
