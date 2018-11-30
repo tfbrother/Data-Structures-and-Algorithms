@@ -19,6 +19,10 @@ Algorithms & Data Structures in Go
 
 ## [栈](data-structures/stack/stack.go)
 * 后入先出（LIFO）
+### 应用
+* 编辑器-undo操作
+* 操作系统-系统调用栈
+* 编译器-括号匹配
 
 ## 线性表
 ### [顺序表](data-structures/list/sequence.go)
