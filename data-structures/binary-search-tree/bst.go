@@ -29,6 +29,7 @@ func (b *bst) Add(node *Node) {
 // 在以node1为根结点的二叉搜索树中添加结点node2
 func (b *bst) add(node1 *Node, node2 *Node) *Node {
 	if node1 == nil {
+		b.size++
 		return node2
 	}
 
@@ -97,6 +98,7 @@ func (b *bst) maxNum(node *Node) *Node {
 
 // 删除二叉树的最小值
 func (b *bst) RemoveMin() {
+	b.size--
 	b.root = b.removeMin(b.root)
 }
 
@@ -114,6 +116,7 @@ func (b *bst) removeMin(node *Node) *Node {
 
 // 删除二叉树的最大值
 func (b *bst) RemoveMax() {
+	b.size--
 	b.root = b.removeMax(b.root)
 }
 
@@ -157,6 +160,7 @@ func (b *bst) remove(node *Node, val int) *Node {
 	}
 
 	if node.Value == val { // 找到，则删除
+		b.size--
 		// 如果该结点只有一个子树，则删除后，子树替代该结点即可
 		if node.Left == nil {
 			return node.Right
