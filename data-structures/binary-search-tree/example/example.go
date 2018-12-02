@@ -34,4 +34,8 @@ func main() {
 
 	node := bst.Find(200)
 	fmt.Println("查找200，", node)
+
+	bst.Remove(98)
+	fmt.Println("删除任意值，比如98后的，前序遍历")
+	bst.PrevOrder()
 }

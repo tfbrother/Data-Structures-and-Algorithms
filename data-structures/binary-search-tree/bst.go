@@ -70,26 +70,26 @@ func (b *bst) LevelOrder() {
 
 // 获取最小值，根据二叉搜索树的定义，最左边的左结点就是这个最小值
 func (b *bst) MinNum() int {
-	return b.minNum(b.root)
+	return (b.minNum(b.root)).Value
 }
 
 // 获取以node为根的二叉搜索树的最小值
-func (b *bst) minNum(node *Node) int {
+func (b *bst) minNum(node *Node) *Node {
 	if node.Left == nil {
-		return node.Value
+		return node
 	}
 	return b.minNum(node.Left)
 }
 
 // 获取最大值，根据二叉搜索树的定义，最右边的右结点就是这个最大值
 func (b *bst) MaxNum() int {
-	return b.maxNum(b.root)
+	return (b.maxNum(b.root)).Value
 }
 
 // 获取以node为根的二叉搜索树的最大值
-func (b *bst) maxNum(node *Node) int {
+func (b *bst) maxNum(node *Node) *Node {
 	if node.Right == nil {
-		return node.Value
+		return node
 	}
 
 	return b.maxNum(node.Right)
@@ -143,8 +143,41 @@ func (b *bst) find(node *Node, val int) *Node {
 	}
 }
 
-// 删除二叉搜索树的node结点
-func (b *bst) Remove(node *Node) {
+// 删除二叉搜索树的值为val的结点（假设值不重复）
+func (b *bst) Remove(val int) {
+	b.root = b.remove(b.root, val)
+	return
+}
+
+// 删除以node为根的二叉搜索树中值为val的这个结点，返回删除后树的根结点
+func (b *bst) remove(node *Node, val int) *Node {
+	// 如果该结点是叶子结点，直接删除。
+	if node == nil { //没有找到
+		return node
+	}
+
+	if node.Value == val { // 找到，则删除
+		// 如果该结点只有一个子树，则删除后，子树替代该结点即可
+		if node.Left == nil {
+			return node.Right
+		} else if node.Right == nil {
+			return node.Left
+		} else { // 如果该结点有左右子树，则情况比较复杂。后继结点定义
+			// 找到比待删除结点大的最小结点，即待删除结点右子树的最小结点
+			// 用过这个结点顶替待删除结点即可，因此上面的查找最小值函数minNum应该修改为返回Node指针
+
+			successor := b.minNum(node.Right)
+			successor.Right = b.removeMin(node.Left)
+			successor.Left = node.Left
+			return successor
+		}
+	} else if node.Value > val {
+		node.Left = b.remove(node.Left, val)
+		return node
+	} else {
+		node.Right = b.remove(node.Right, val)
+		return node
+	}
 
 }
 
