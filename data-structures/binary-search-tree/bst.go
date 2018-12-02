@@ -127,6 +127,27 @@ func (b *bst) removeMax(node *Node) *Node {
 	return node
 }
 
+// 查找二叉搜索树
+func (b *bst) Find(val int) *Node {
+	return b.find(b.root, val)
+}
+
+// 查找以node为根的二叉搜索树
+func (b *bst) find(node *Node, val int) *Node {
+	if node == nil || node.Value == val {
+		return node
+	} else if node.Value > val {
+		return b.find(node.Left, val)
+	} else {
+		return b.find(node.Right, val)
+	}
+}
+
+// 删除二叉搜索树的node结点
+func (b *bst) Remove(node *Node) {
+
+}
+
 func (b *bst) Empty() bool {
 	return b.size == 0
 }

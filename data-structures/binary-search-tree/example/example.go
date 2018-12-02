@@ -31,4 +31,7 @@ func main() {
 	bst.RemoveMax()
 	fmt.Println("删除最大值的，前序遍历")
 	bst.PrevOrder()
+
+	node := bst.Find(200)
+	fmt.Println("查找200，", node)
 }
