@@ -6,6 +6,7 @@ Algorithms & Data Structures in Go
 # 数据结构
 ## 一、线性结构
 ### 1、[数组](data-structures/list/sequence.go)
+### 2、[hash表](data-structures/hash-table/)
 ### 静态链表
 ### 单链表
 ### 循环链表
