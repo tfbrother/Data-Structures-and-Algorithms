@@ -32,6 +32,9 @@ Algorithms & Data Structures in Go
 ### 2、[堆](data-structures/heap/)
 * 最大堆/最小堆
 
+### [trie](data-structures/trie/)
+* 字典树/前缀树
+
 ## 三、图形结构
 ### 1、[无向图图](data-structures/graph/matrix.go)
 * 深度遍历（递归）
