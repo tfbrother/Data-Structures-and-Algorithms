@@ -29,7 +29,7 @@ Algorithms & Data Structures in Go
 * 主要是理解递归算法
 * 添加和遍历都是用的递归
 
-### 2、[堆](data-structures/heap/)
+### 3、[堆](data-structures/heap/)
 * 最大堆/最小堆
 
 ### [trie](data-structures/trie/)
