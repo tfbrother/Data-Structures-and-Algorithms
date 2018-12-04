@@ -17,19 +17,19 @@ type Node struct {
 }
 
 // 二叉搜索树
-type bst struct {
+type BST struct {
 	root *Node // 根结点
 	size int   // 大小
 }
 
 // 添加结点
-func (b *bst) Add(node *Node) {
+func (b *BST) Add(node *Node) {
 	b.root = b.add(b.root, node)
 }
 
 // 私有方法：添加结点
 // 在以node1为根结点的二叉搜索树中添加结点node2
-func (b *bst) add(node1 *Node, node2 *Node) *Node {
+func (b *BST) add(node1 *Node, node2 *Node) *Node {
 	if node1 == nil {
 		b.size++
 		return node2
@@ -46,17 +46,16 @@ func (b *bst) add(node1 *Node, node2 *Node) *Node {
 }
 
 // 前序遍历
-func (b *bst) PrevOrder() {
+func (b *BST) PrevOrder() {
 	if b.Empty() {
 		return
 	}
 
 	b.prevOrder(b.root)
-
 }
 
 // 前序遍历：以node为根的二叉搜索树
-func (b *bst) prevOrder(node *Node) {
+func (b *BST) prevOrder(node *Node) {
 	if node == nil {
 		return
 	}
@@ -65,19 +64,36 @@ func (b *bst) prevOrder(node *Node) {
 	b.prevOrder(node.Right)
 }
 
+// 中序遍历，采用循环实现，借助栈实现
+// TODO 注意：非递归写法一定会用到栈
+func (b *BST) InOrder() {
+	if b.Empty() {
+		return
+	}
+
+	b.inOrder(b.root)
+}
+
+// 用栈模拟递归
+func (b *BST) inOrder(node *Node) {
+	for node != nil {
+
+	}
+}
+
 // 二叉搜索树的层序遍历（广度优先遍历）
 // 需要借助队列来实现
-func (b *bst) LevelOrder() {
+func (b *BST) LevelOrder() {
 
 }
 
 // 获取最小值，根据二叉搜索树的定义，最左边的左结点就是这个最小值
-func (b *bst) MinNum() int {
+func (b *BST) MinNum() int {
 	return (b.minNum(b.root)).Value
 }
 
 // 获取以node为根的二叉搜索树的最小值
-func (b *bst) minNum(node *Node) *Node {
+func (b *BST) minNum(node *Node) *Node {
 	if node.Left == nil {
 		return node
 	}
@@ -85,12 +101,12 @@ func (b *bst) minNum(node *Node) *Node {
 }
 
 // 获取最大值，根据二叉搜索树的定义，最右边的右结点就是这个最大值
-func (b *bst) MaxNum() int {
+func (b *BST) MaxNum() int {
 	return (b.maxNum(b.root)).Value
 }
 
 // 获取以node为根的二叉搜索树的最大值
-func (b *bst) maxNum(node *Node) *Node {
+func (b *BST) maxNum(node *Node) *Node {
 	if node.Right == nil {
 		return node
 	}
@@ -99,13 +115,13 @@ func (b *bst) maxNum(node *Node) *Node {
 }
 
 // 删除二叉树的最小值
-func (b *bst) RemoveMin() {
+func (b *BST) RemoveMin() {
 	b.size--
 	b.root = b.removeMin(b.root)
 }
 
 // 删除以node为根的二叉搜索树，返回的是新树的根结点
-func (b *bst) removeMin(node *Node) *Node {
+func (b *BST) removeMin(node *Node) *Node {
 	//如果最小值是叶子结点，就直接删除即可
 	//如果最小值是非叶子结点（只有右子树），则删除后，把右子树作为移动到该元素的位置即可
 	if node.Left == nil { //nil可以看成一个二叉搜索树的根结点，所以不用去检测右子树是否为nil
@@ -117,13 +133,13 @@ func (b *bst) removeMin(node *Node) *Node {
 }
 
 // 删除二叉树的最大值
-func (b *bst) RemoveMax() {
+func (b *BST) RemoveMax() {
 	b.size--
 	b.root = b.removeMax(b.root)
 }
 
 // 删除以node为根的二叉搜索树，返回的是新树的根结点
-func (b *bst) removeMax(node *Node) *Node {
+func (b *BST) removeMax(node *Node) *Node {
 	if node.Right == nil {
 		return node.Left
 	}
@@ -133,12 +149,12 @@ func (b *bst) removeMax(node *Node) *Node {
 }
 
 // 查找二叉搜索树
-func (b *bst) Find(val int) *Node {
+func (b *BST) Find(val int) *Node {
 	return b.find(b.root, val)
 }
 
 // 查找以node为根的二叉搜索树
-func (b *bst) find(node *Node, val int) *Node {
+func (b *BST) find(node *Node, val int) *Node {
 	if node == nil || node.Value == val {
 		return node
 	} else if node.Value > val {
@@ -149,13 +165,13 @@ func (b *bst) find(node *Node, val int) *Node {
 }
 
 // 删除二叉搜索树的值为val的结点（假设值不重复）
-func (b *bst) Remove(val int) {
+func (b *BST) Remove(val int) {
 	b.root = b.remove(b.root, val)
 	return
 }
 
 // 删除以node为根的二叉搜索树中值为val的这个结点，返回删除后树的根结点
-func (b *bst) remove(node *Node, val int) *Node {
+func (b *BST) remove(node *Node, val int) *Node {
 	// 如果该结点是叶子结点，直接删除。
 	if node == nil { //没有找到
 		return node
@@ -187,14 +203,14 @@ func (b *bst) remove(node *Node, val int) *Node {
 
 }
 
-func (b *bst) Empty() bool {
+func (b *BST) Empty() bool {
 	return b.size == 0
 }
 
-func (b *bst) GetSize() int {
+func (b *BST) GetSize() int {
 	return b.size
 }
 
-func NewBst(root *Node) *bst {
-	return &bst{root: root, size: 1}
+func NewBst(root *Node) *BST {
+	return &BST{root: root, size: 1}
 }
