@@ -16,4 +16,5 @@ func main() {
 	fmt.Println("所有的keys", avl.InOrder())
 	fmt.Println("是否是二叉搜索树", avl.IsBST())
 	fmt.Println("是否是平衡二叉搜索树", avl.IsBalanced())
+	fmt.Println("获取元素：tfbrother10，值为：", avl.Get("tfbrother20"))
 }

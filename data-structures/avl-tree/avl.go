@@ -107,6 +107,35 @@ func (a *AVL) GetBalanceFactor(n *node) int {
 	return a.GetHeight(n.Left) - a.GetHeight(n.Right)
 }
 
+// 获取元素
+func (a *AVL) Get(key string) string {
+	retNode := a.getNode(a.root, key)
+	if retNode == nil {
+		return ""
+	}
+
+	return retNode.value
+}
+
+func (a *AVL) contains(key string) bool {
+	return a.getNode(a.root, key) != nil
+}
+
+// 在以n为根结点的树中搜索key
+func (a *AVL) getNode(n *node, key string) *node {
+	if n == nil {
+		return nil
+	}
+
+	if n.key == key {
+		return n
+	} else if n.key > key {
+		return a.getNode(n.Left, key)
+	} else {
+		return a.getNode(n.Right, key)
+	}
+}
+
 // 添加
 func (a *AVL) Add(key string, value string) {
 	a.root = a.add(a.root, key, value)
