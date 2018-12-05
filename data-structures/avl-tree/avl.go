@@ -52,6 +52,56 @@ func (a *AVL) GetHeight(n *node) int {
 	return n.height
 }
 
+// 中序遍历
+func (a *AVL) InOrder() []string {
+	return a.inOrder(a.root)
+}
+
+func (a *AVL) inOrder(n *node) []string {
+	retStr := make([]string, 0)
+	if n == nil {
+		return retStr
+	}
+
+	retStr = append(retStr, a.inOrder(n.Left)...)
+	retStr = append(retStr, n.key)
+	retStr = append(retStr, a.inOrder(n.Right)...)
+
+	return retStr
+}
+
+// 判断该树是否是二叉搜索树
+// 实际上就是判断中序遍历的结果是否是升序的即可。
+func (a *AVL) IsBST() bool {
+	keys := a.inOrder(a.root)
+
+	for i := 1; i < len(keys); i++ {
+		if keys[i] < keys[i-1] {
+			return false
+		}
+	}
+
+	return true
+}
+
+// 判断该树是否是平衡的
+func (a *AVL) IsBalanced() bool {
+	return a.isBalanced(a.root)
+}
+
+func (a *AVL) isBalanced(n *node) bool {
+	if n == nil {
+		return true
+	}
+
+	balanceFactor := a.GetBalanceFactor(n)
+	if math.Abs(float64(balanceFactor)) > 1.0 {
+		return false
+	}
+
+	return a.isBalanced(n.Left) && a.isBalanced(n.Right)
+}
+
 // 获取结点的平衡因子
 func (a *AVL) GetBalanceFactor(n *node) int {
 	return a.GetHeight(n.Left) - a.GetHeight(n.Right)
