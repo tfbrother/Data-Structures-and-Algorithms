@@ -91,6 +91,50 @@ func (a *AVL) add(n *node, key string, value string) *node {
 	return n
 }
 
+// 对节点n进行向右旋转操作，返回旋转后新的根节点x
+//        y                              x
+//       / \                           /   \
+//      x   T4     向右旋转 (y)        z     y
+//     / \       - - - - - - - ->    / \   / \
+//    z   T3                       T1  T2 T3 T4
+//   / \
+// T1   T2
+func (a *AVL) rightRotate(y *node) *node {
+	// 先把要移动的结点暂存下来
+	x := y.Left
+	t3 := x.Right
+	// 向右旋转
+	x.Right = y
+	y.Left = t3
+
+	// 更新高度Y，X的高度
+	y.height = int(math.Max(float64(a.GetHeight(y.Left)), float64(a.GetHeight(y.Right)))) + 1
+	x.height = int(math.Max(float64(a.GetHeight(x.Left)), float64(a.GetHeight(x.Right)))) + 1
+	return x
+}
+
+// 对节点y进行向左旋转操作，返回旋转后新的根节点x
+//    y                             x
+//  /  \                          /   \
+// T1   x      向左旋转 (y)       y     z
+//     / \   - - - - - - - ->   / \   / \
+//   T2  z                     T1 T2 T3 T4
+//      / \
+//     T3 T4
+func (a *AVL) leftRotate(y *node) *node {
+	// 先把要移动的结点暂存下来
+	x := y.Right
+	t3 := x.Left
+	// 向右旋转
+	x.Left = y
+	y.Right = t3
+
+	// 更新高度Y，X的高度
+	y.height = int(math.Max(float64(a.GetHeight(y.Left)), float64(a.GetHeight(y.Right)))) + 1
+	x.height = int(math.Max(float64(a.GetHeight(x.Left)), float64(a.GetHeight(x.Right)))) + 1
+	return x
+}
+
 func NewNode(key string, value string) *node {
 	return &node{key: key, value: value, height: 1, Left: nil, Right: nil}
 }
