@@ -27,8 +27,17 @@ func main() {
 	}
 
 	fmt.Println("树的大小", avl.Size())
-	fmt.Println("所有的keys", avl.InOrder())
+
+	items := avl.InOrder()
+	keys := make([]string, 0, len(items))
+
+	for i := 0; i < len(items); i++ {
+		keys = append(keys, items[i].(*item).key)
+	}
+
+	fmt.Println("所有的keys", keys)
+
 	fmt.Println("是否是二叉搜索树", avl.IsBST())
 	fmt.Println("是否是平衡二叉搜索树", avl.IsBalanced())
-	fmt.Println("获取元素：tfbrother10，值为：", avl.Get(&item{"tfbrother20", "tfbrother"}))
+	fmt.Println("获取元素：tfbrother10，值为：", avl.Get(&item{"tfbrother10", "tfbrother"}))
 }
