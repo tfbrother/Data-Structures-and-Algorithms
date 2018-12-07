@@ -10,36 +10,46 @@ import "fmt"
 细节：size维护时在何处维护，函数返回值设计等等。
 */
 
+// 采用类似泛型的思想，方便外层复用
+type Item interface {
+	Less(a Item) bool
+	ToString() string
+}
+
 // 结点
-type Node struct {
-	Value       int
-	Left, Right *Node
+type node struct {
+	item        Item // 保存结点数据
+	Left, Right *node
+}
+
+func newNode(item Item) *node {
+	return &node{item: item}
 }
 
 // 二叉搜索树
 type BST struct {
-	root *Node // 根结点
+	root *node // 根结点
 	size int   // 大小
 }
 
 // 添加结点
-func (b *BST) Add(node *Node) {
-	b.root = b.add(b.root, node)
+func (b *BST) Add(item Item) {
+	b.root = b.add(b.root, item)
 }
 
 // 私有方法：添加结点
 // 在以node1为根结点的二叉搜索树中添加结点node2
-func (b *BST) add(node1 *Node, node2 *Node) *Node {
+func (b *BST) add(node1 *node, item Item) *node {
 	if node1 == nil {
 		b.size++
-		return node2
+		return newNode(item)
 	}
 
-	if node1.Value > node2.Value {
-		node1.Left = b.add(node1.Left, node2)
+	if item.Less(node1.item) {
+		node1.Left = b.add(node1.Left, item)
 	}
-	if node1.Value < node2.Value {
-		node1.Right = b.add(node1.Right, node2)
+	if node1.item.Less(item) {
+		node1.Right = b.add(node1.Right, item)
 	}
 
 	return node1
@@ -55,11 +65,11 @@ func (b *BST) PrevOrder() {
 }
 
 // 前序遍历：以node为根的二叉搜索树
-func (b *BST) prevOrder(node *Node) {
+func (b *BST) prevOrder(node *node) {
 	if node == nil {
 		return
 	}
-	fmt.Println(node.Value)
+	fmt.Println(node.item.ToString())
 	b.prevOrder(node.Left)
 	b.prevOrder(node.Right)
 }
@@ -75,7 +85,7 @@ func (b *BST) InOrder() {
 }
 
 // 用栈模拟递归
-func (b *BST) inOrder(node *Node) {
+func (b *BST) inOrder(node *node) {
 	for node != nil {
 
 	}
@@ -88,12 +98,12 @@ func (b *BST) LevelOrder() {
 }
 
 // 获取最小值，根据二叉搜索树的定义，最左边的左结点就是这个最小值
-func (b *BST) MinNum() int {
-	return (b.minNum(b.root)).Value
+func (b *BST) MinNum() Item {
+	return (b.minNum(b.root)).item
 }
 
 // 获取以node为根的二叉搜索树的最小值
-func (b *BST) minNum(node *Node) *Node {
+func (b *BST) minNum(node *node) *node {
 	if node.Left == nil {
 		return node
 	}
@@ -101,12 +111,12 @@ func (b *BST) minNum(node *Node) *Node {
 }
 
 // 获取最大值，根据二叉搜索树的定义，最右边的右结点就是这个最大值
-func (b *BST) MaxNum() int {
-	return (b.maxNum(b.root)).Value
+func (b *BST) MaxNum() Item {
+	return (b.maxNum(b.root)).item
 }
 
 // 获取以node为根的二叉搜索树的最大值
-func (b *BST) maxNum(node *Node) *Node {
+func (b *BST) maxNum(node *node) *node {
 	if node.Right == nil {
 		return node
 	}
@@ -121,7 +131,7 @@ func (b *BST) RemoveMin() {
 }
 
 // 删除以node为根的二叉搜索树，返回的是新树的根结点
-func (b *BST) removeMin(node *Node) *Node {
+func (b *BST) removeMin(node *node) *node {
 	//如果最小值是叶子结点，就直接删除即可
 	//如果最小值是非叶子结点（只有右子树），则删除后，把右子树作为移动到该元素的位置即可
 	if node.Left == nil { //nil可以看成一个二叉搜索树的根结点，所以不用去检测右子树是否为nil
@@ -139,7 +149,7 @@ func (b *BST) RemoveMax() {
 }
 
 // 删除以node为根的二叉搜索树，返回的是新树的根结点
-func (b *BST) removeMax(node *Node) *Node {
+func (b *BST) removeMax(node *node) *node {
 	if node.Right == nil {
 		return node.Left
 	}
@@ -149,56 +159,60 @@ func (b *BST) removeMax(node *Node) *Node {
 }
 
 // 查找二叉搜索树
-func (b *BST) Find(val int) *Node {
-	return b.find(b.root, val)
+func (b *BST) Find(item Item) Item {
+	return b.find(b.root, item).item
 }
 
 // 查找以node为根的二叉搜索树
-func (b *BST) find(node *Node, val int) *Node {
-	if node == nil || node.Value == val {
-		return node
-	} else if node.Value > val {
-		return b.find(node.Left, val)
+func (b *BST) find(n *node, item Item) *node {
+	if n == nil {
+		return n
+	}
+
+	if item.Less(n.item) {
+		return b.find(n.Left, item)
+	} else if n.item.Less(item) {
+		return b.find(n.Right, item)
 	} else {
-		return b.find(node.Right, val)
+		return n
 	}
 }
 
 // 删除二叉搜索树的值为val的结点（假设值不重复）
-func (b *BST) Remove(val int) {
-	b.root = b.remove(b.root, val)
+func (b *BST) Remove(item Item) {
+	b.root = b.remove(b.root, item)
 	return
 }
 
 // 删除以node为根的二叉搜索树中值为val的这个结点，返回删除后树的根结点
-func (b *BST) remove(node *Node, val int) *Node {
+func (b *BST) remove(n *node, item Item) *node {
 	// 如果该结点是叶子结点，直接删除。
-	if node == nil { //没有找到
-		return node
+	if n == nil { //没有找到
+		return n
 	}
 
-	if node.Value == val { // 找到，则删除
+	if item.Less(n.item) {
+		n.Left = b.remove(n.Left, item)
+		return n
+	} else if n.item.Less(item) {
+		n.Right = b.remove(n.Right, item)
+		return n
+	} else { // 找到，则删除
 		b.size--
 		// 如果该结点只有一个子树，则删除后，子树替代该结点即可
-		if node.Left == nil {
-			return node.Right
-		} else if node.Right == nil {
-			return node.Left
+		if n.Left == nil {
+			return n.Right
+		} else if n.Right == nil {
+			return n.Left
 		} else { // 如果该结点有左右子树，则情况比较复杂。后继结点定义
 			// 找到比待删除结点大的最小结点，即待删除结点右子树的最小结点
 			// 用过这个结点顶替待删除结点即可，因此上面的查找最小值函数minNum应该修改为返回Node指针
 
-			successor := b.minNum(node.Right)
-			successor.Right = b.removeMin(node.Left)
-			successor.Left = node.Left
+			successor := b.minNum(n.Right)
+			successor.Right = b.removeMin(n.Left)
+			successor.Left = n.Left
 			return successor
 		}
-	} else if node.Value > val {
-		node.Left = b.remove(node.Left, val)
-		return node
-	} else {
-		node.Right = b.remove(node.Right, val)
-		return node
 	}
 
 }
@@ -211,6 +225,6 @@ func (b *BST) GetSize() int {
 	return b.size
 }
 
-func NewBst(root *Node) *BST {
-	return &BST{root: root, size: 1}
+func NewBst(item Item) *BST {
+	return &BST{root: newNode(item), size: 1}
 }

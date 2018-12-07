@@ -3,19 +3,34 @@ package main
 import (
 	"fmt"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/binary-search-tree"
+	"strconv"
 )
 
+type Node struct {
+	key   int
+	value string
+}
+
+func (n *Node) Less(b binary_search_tree.Item) bool {
+	return n.key < b.(*Node).key
+}
+
+func (n *Node) ToString() string {
+	return "key=" + strconv.Itoa(n.key) + ",value=" + n.value
+}
+
 func main() {
-	BST := binary_search_tree.NewBst(&binary_search_tree.Node{100, nil, nil})
+
+	BST := binary_search_tree.NewBst(&Node{100, "tfbrother100"})
 	//fmt.Println(BST.GetSize())
 
-	BST.Add(&binary_search_tree.Node{200, nil, nil})
-	BST.Add(&binary_search_tree.Node{90, nil, nil})
-	BST.Add(&binary_search_tree.Node{99, nil, nil})
-	BST.Add(&binary_search_tree.Node{98, nil, nil})
-	BST.Add(&binary_search_tree.Node{89, nil, nil})
-	BST.Add(&binary_search_tree.Node{101, nil, nil})
-	BST.Add(&binary_search_tree.Node{299, nil, nil})
+	BST.Add(&Node{200, "tfbrother200"})
+	BST.Add(&Node{90, "tfbrother90"})
+	BST.Add(&Node{99, "tfbrother99"})
+	BST.Add(&Node{98, "tfbrother98"})
+	BST.Add(&Node{89, "tfbrother89"})
+	BST.Add(&Node{101, "tfbrother101"})
+	BST.Add(&Node{299, "tfbrother299"})
 
 	BST.PrevOrder()
 
@@ -33,10 +48,10 @@ func main() {
 	fmt.Println("删除最大值的，前序遍历")
 	BST.PrevOrder()
 
-	node := BST.Find(200)
-	fmt.Println("查找200，", node)
+	node := BST.Find(&Node{200, "tfbrother201"})
+	fmt.Println("查找200，", node.ToString())
 
-	BST.Remove(98)
+	BST.Remove(&Node{98, "tfbrother200"})
 	fmt.Println("删除任意值，比如98后的，前序遍历")
 	BST.PrevOrder()
 }
