@@ -40,4 +40,9 @@ func main() {
 	fmt.Println("是否是二叉搜索树", avl.IsBST())
 	fmt.Println("是否是平衡二叉搜索树", avl.IsBalanced())
 	fmt.Println("获取元素：tfbrother10，值为：", avl.Get(&item{"tfbrother10", "tfbrother"}))
+
+	fmt.Println("删除元素tfbrother10测试=========")
+	avl.Remove(&item{"tfbrother10", "tfbrother"})
+	fmt.Println("删除后获取：tfbrother10，值为：", avl.Get(&item{"tfbrother10", "tfbrother"}))
+	fmt.Println("删除元素后是否是平衡二叉搜索树", avl.IsBalanced())
 }
