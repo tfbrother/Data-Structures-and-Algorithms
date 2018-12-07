@@ -160,7 +160,12 @@ func (b *BST) removeMax(node *node) *node {
 
 // 查找二叉搜索树
 func (b *BST) Find(item Item) Item {
-	return b.find(b.root, item).item
+	n := b.find(b.root, item)
+	// 必须要验证返回值是否为nil
+	if n == nil {
+		return nil
+	}
+	return n.item
 }
 
 // 查找以node为根的二叉搜索树

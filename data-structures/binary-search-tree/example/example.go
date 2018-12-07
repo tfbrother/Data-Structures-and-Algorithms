@@ -48,8 +48,13 @@ func main() {
 	fmt.Println("删除最大值的，前序遍历")
 	BST.PrevOrder()
 
-	node := BST.Find(&Node{200, "tfbrother201"})
-	fmt.Println("查找200，", node.ToString())
+	node := &Node{201, "tfbrother201"}
+	found := BST.Find(node)
+	if found != nil {
+		fmt.Println("查找数据，", found.ToString())
+	} else {
+		fmt.Println("没有查找到，", node.ToString())
+	}
 
 	BST.Remove(&Node{98, "tfbrother200"})
 	fmt.Println("删除任意值，比如98后的，前序遍历")
