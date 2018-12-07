@@ -5,29 +5,17 @@ import (
 	"math"
 )
 
-// avl树一种平衡二叉搜索树，所以都是基于二叉搜索树来实现。由于golang不支持泛型，此处不复用之前实现的BST，从新底层实现avl树。
-
-// TODO(tfbrother) 此处接口设计还有问题，后期修正2018-12-05
-type Node interface {
-	Less(a node) int
+// avl树一种平衡二叉搜索树，所以都是基于二叉搜索树来实现。
+type Item interface {
+	Less(a Item) bool
+	ToString() string
 }
 
 // 设置成为私有结构体，不对外部暴露node的结构
 type node struct {
-	key         string
-	value       string
+	item        Item  //结点中保存的数据项目，采用类似泛型的思想，方便复用。
 	height      int   // 高度
 	Left, Right *node // 左右子树
-}
-
-func (n node) Less(a node) int {
-	if n.value > a.value {
-		return 1
-	} else if n.value == a.value {
-		return 0
-	}
-
-	return -1
 }
 
 type AVL struct {
@@ -53,18 +41,18 @@ func (a *AVL) GetHeight(n *node) int {
 }
 
 // 中序遍历
-func (a *AVL) InOrder() []string {
+func (a *AVL) InOrder() []Item {
 	return a.inOrder(a.root)
 }
 
-func (a *AVL) inOrder(n *node) []string {
-	retStr := make([]string, 0)
+func (a *AVL) inOrder(n *node) []Item {
+	retStr := make([]Item, 0)
 	if n == nil {
 		return retStr
 	}
 
 	retStr = append(retStr, a.inOrder(n.Left)...)
-	retStr = append(retStr, n.key)
+	retStr = append(retStr, n.item)
 	retStr = append(retStr, a.inOrder(n.Right)...)
 
 	return retStr
@@ -76,7 +64,7 @@ func (a *AVL) IsBST() bool {
 	keys := a.inOrder(a.root)
 
 	for i := 1; i < len(keys); i++ {
-		if keys[i] < keys[i-1] {
+		if keys[i].Less(keys[i-1]) {
 			return false
 		}
 	}
@@ -108,51 +96,54 @@ func (a *AVL) GetBalanceFactor(n *node) int {
 }
 
 // 获取元素
-func (a *AVL) Get(key string) string {
+func (a *AVL) Get(key Item) Item {
 	retNode := a.getNode(a.root, key)
 	if retNode == nil {
-		return ""
+		return nil
 	}
 
-	return retNode.value
+	return retNode.item
 }
 
-func (a *AVL) contains(key string) bool {
+func (a *AVL) contains(key Item) bool {
 	return a.getNode(a.root, key) != nil
 }
 
 // 在以n为根结点的树中搜索key
-func (a *AVL) getNode(n *node, key string) *node {
-	if n == nil {
-		return nil
+// TODO 这种辅助元素的设计，非常重要
+func (a *AVL) getNode(n *node, key Item) *node {
+	for n != nil {
+		switch {
+		case key.Less(n.item):
+			return a.getNode(n.Left, key)
+		case n.item.Less(key):
+			return a.getNode(n.Right, key)
+		default:
+			return n
+		}
 	}
 
-	if n.key == key {
-		return n
-	} else if n.key > key {
-		return a.getNode(n.Left, key)
-	} else {
-		return a.getNode(n.Right, key)
-	}
+	return n
 }
 
 // 添加
-func (a *AVL) Add(key string, value string) {
-	a.root = a.add(a.root, key, value)
+func (a *AVL) Add(key Item) {
+	a.root = a.add(a.root, key)
 }
 
 // 在以node为根结点的avl树中添加结点，返回添加后的树的根结点
-func (a *AVL) add(n *node, key string, value string) *node {
+func (a *AVL) add(n *node, key Item) *node {
 	if n == nil {
 		a.size++
-		return NewNode(key, value)
+		return NewNode(key)
 	}
-	if n.key > key {
-		n.Left = a.add(n.Left, key, value)
-	} else if n.key < key {
-		n.Right = a.add(n.Right, key, value)
-	} else { // TODO(tfbrother) 相等时更新value值，此时可以直接返回，因为并没有影响高度和平衡因子，即使不返回也没有bug。
-		n.value = value
+
+	if key.Less(n.item) {
+		n.Left = a.add(n.Left, key)
+	} else if n.item.Less(key) {
+		n.Right = a.add(n.Right, key)
+	} else { // TODO(tfbrother) 相等时更新，此时可以直接返回，因为并没有影响高度和平衡因子，即使不返回也没有bug。
+		n.item = key
 		return n
 	}
 
@@ -164,7 +155,7 @@ func (a *AVL) add(n *node, key string, value string) *node {
 	// 获取平衡因子
 	balanceFactor := a.GetBalanceFactor(n)
 	if math.Abs(float64(balanceFactor)) > 1.0 {
-		fmt.Println(n.key, "==balanceFactor==", balanceFactor)
+		fmt.Println(n.item.ToString(), "==balanceFactor==", balanceFactor)
 	}
 
 	return n
@@ -214,8 +205,8 @@ func (a *AVL) leftRotate(y *node) *node {
 	return x
 }
 
-func NewNode(key string, value string) *node {
-	return &node{key: key, value: value, height: 1, Left: nil, Right: nil}
+func NewNode(key Item) *node {
+	return &node{item: key, height: 1, Left: nil, Right: nil}
 }
 
 func NewAVL() *AVL {
