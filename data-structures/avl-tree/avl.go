@@ -155,6 +155,11 @@ func (a *AVL) add(n *node, key Item) *node {
 		return n
 	}
 
+	return a.balancedNode(n)
+}
+
+// 对以结点进行平衡维护
+func (a *AVL) balancedNode(n *node) *node {
 	// 获取平衡因子
 	balanceFactor := a.GetBalanceFactor(n)
 	//if math.Abs(float64(balanceFactor)) > 1.0 {
@@ -228,6 +233,66 @@ func (a *AVL) leftRotate(y *node) *node {
 	y.height = int(math.Max(float64(a.GetHeight(y.Left)), float64(a.GetHeight(y.Right)))) + 1
 	x.height = int(math.Max(float64(a.GetHeight(x.Left)), float64(a.GetHeight(x.Right)))) + 1
 	return x
+}
+
+// 删除任意元素
+func (a *AVL) Remove(key Item) {
+	a.remove(a.root, key)
+}
+
+// 以node为根的树中删除key元素，返回新的root
+func (a *AVL) remove(n *node, key Item) *node {
+	// 如果该结点是叶子结点，直接删除。
+	if n == nil { //没有找到
+		return n
+	}
+	var retNode *node
+	if key.Less(n.item) {
+		n.Left = a.remove(n.Left, key)
+		retNode = n
+	} else if n.item.Less(key) {
+		n.Right = a.remove(n.Right, key)
+		retNode = n
+	} else { // 找到，则删除
+		a.size--
+		// 如果该结点只有一个子树，则删除后，子树替代该结点即可
+		if n.Left == nil {
+			retNode = n.Right
+		} else if n.Right == nil {
+			retNode = n.Left
+		} else { // 如果该结点有左右子树，则情况比较复杂。后继结点定义
+			// 找到比待删除结点大的最小结点，即待删除结点右子树的最小结点
+			// 用过这个结点顶替待删除结点即可，因此上面的查找最小值函数minNum应该修改为返回Node指针
+
+			successor := a.min(n.Right)
+			successor.Right = a.remove(n.Left, successor.item)
+			successor.Left = n.Left
+			retNode = successor
+		}
+	}
+
+	if retNode == nil {
+		return nil
+	}
+
+	// 平衡维护
+	return a.balancedNode(retNode)
+}
+
+func (a *AVL) max(n *node) *node {
+	for n != nil {
+		n = n.Left
+	}
+
+	return n
+}
+
+func (a *AVL) min(n *node) *node {
+	for n != nil {
+		n = n.Right
+	}
+
+	return n
 }
 
 func newNode(key Item) *node {
