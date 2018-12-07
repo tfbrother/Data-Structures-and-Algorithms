@@ -183,6 +183,23 @@ func (b *BST) find(n *node, item Item) *node {
 	}
 }
 
+// 查找循环实现
+func (b *BST) Find1(item Item) Item {
+	n := b.root
+	for n != nil {
+		switch {
+		case item.Less(n.item):
+			n = n.Left
+		case n.item.Less(item):
+			n = n.Right
+		default:
+			return n.item
+		}
+	}
+
+	return nil
+}
+
 // 删除二叉搜索树的值为val的结点（假设值不重复）
 func (b *BST) Remove(item Item) {
 	b.root = b.remove(b.root, item)
