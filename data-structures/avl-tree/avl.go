@@ -1,7 +1,6 @@
 package avl_tree
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -150,12 +149,38 @@ func (a *AVL) add(n *node, key Item) *node {
 	// 更新高度：
 	l := a.GetHeight(n.Left)
 	r := a.GetHeight(n.Right)
+	oldHeight := n.height
 	n.height = 1 + int(math.Max(float64(l), float64(r)))
+	if oldHeight == n.height { // TODO 优化：高度没有变化就不需要平衡了。
+		return n
+	}
 
 	// 获取平衡因子
 	balanceFactor := a.GetBalanceFactor(n)
-	if math.Abs(float64(balanceFactor)) > 1.0 {
-		fmt.Println(n.item.ToString(), "==balanceFactor==", balanceFactor)
+	//if math.Abs(float64(balanceFactor)) > 1.0 {
+	//	fmt.Println(n.item.ToString(), "==balanceFactor==", balanceFactor)
+	//}
+
+	// LL
+	if balanceFactor > 1 && a.GetBalanceFactor(n.Left) >= 0 {
+		return a.rightRotate(n)
+	}
+
+	// RR
+	if balanceFactor < -1 && a.GetBalanceFactor(n.Right) <= 0 {
+		return a.leftRotate(n)
+	}
+
+	// LR
+	if balanceFactor > 1 && a.GetBalanceFactor(n.Left) < 0 {
+		n.Left = a.leftRotate(n.Left)
+		return a.rightRotate(n)
+	}
+
+	// RL
+	if balanceFactor < -1 && a.GetBalanceFactor(n.Right) > 0 {
+		n.Right = a.rightRotate(n.Right)
+		return a.leftRotate(n)
 	}
 
 	return n
