@@ -134,7 +134,7 @@ func (a *AVL) Add(key Item) {
 func (a *AVL) add(n *node, key Item) *node {
 	if n == nil {
 		a.size++
-		return NewNode(key)
+		return newNode(key)
 	}
 
 	if key.Less(n.item) {
@@ -230,7 +230,7 @@ func (a *AVL) leftRotate(y *node) *node {
 	return x
 }
 
-func NewNode(key Item) *node {
+func newNode(key Item) *node {
 	return &node{item: key, height: 1, Left: nil, Right: nil}
 }
 
