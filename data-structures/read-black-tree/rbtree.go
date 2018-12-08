@@ -1,9 +1,17 @@
 package read_black_tree
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /**
-红黑树，底层基于二叉搜索树实现。只是在二叉搜索树的基础上增加来颜色的维护。
+红黑树，底层基于二叉搜索树实现。只是在二叉搜索树的基础上增加来颜色的维护。性质和2-3树等价
+结点属性：
+1.空结点为黑色
+2.新加入的结点默认为红色
+3.根结点始终为黑色
+4.红色结点的两个子结点为黑色
+5.根结点到所有叶子结点经过的黑色结点数量相同===黑平衡
 */
 
 // 采用类似泛型的思想，方便外层复用
@@ -15,11 +23,23 @@ type Item interface {
 // 结点
 type node struct {
 	item        Item // 保存结点数据
+	black       bool // 颜色
 	Left, Right *node
 }
 
+// 辅助函数
+// 空结点为黑色
+func (n *node) isRed() bool {
+	if n == nil || n.black {
+		return false
+	}
+
+	return true
+}
+
+// 新创建的为红色
 func newNode(item Item) *node {
-	return &node{item: item}
+	return &node{item: item, black: false}
 }
 
 // 二叉搜索树
@@ -31,6 +51,8 @@ type RBTree struct {
 // 添加结点
 func (r *RBTree) Add(item Item) {
 	r.root = r.add(r.root, item)
+	// 维护根结点始终为黑色
+	r.root.black = true
 }
 
 // 私有方法：添加结点
@@ -43,9 +65,10 @@ func (r *RBTree) add(node1 *node, item Item) *node {
 
 	if item.Less(node1.item) {
 		node1.Left = r.add(node1.Left, item)
-	}
-	if node1.item.Less(item) {
+	} else if node1.item.Less(item) {
 		node1.Right = r.add(node1.Right, item)
+	} else {
+		node1.item = item
 	}
 
 	return node1
