@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-// avl树一种平衡二叉搜索树，所以都是基于二叉搜索树来实现。
+// avl树，底层基于二叉搜索树实现。只是在二叉搜索树的基础上增加来高度平衡的维护。
 type Item interface {
 	Less(a Item) bool
 	ToString() string
