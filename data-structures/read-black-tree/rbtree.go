@@ -10,7 +10,7 @@ import (
 1.空结点为黑色
 2.新加入的结点默认为红色
 3.根结点始终为黑色
-4.红色结点的两个子结点为黑色
+4.红色结点的两个子结点为黑色，黑色结点的右孩子一定是黑色的
 5.根结点到所有叶子结点经过的黑色结点数量相同===黑平衡
 */
 
@@ -71,7 +71,50 @@ func (r *RBTree) add(node1 *node, item Item) *node {
 		node1.item = item
 	}
 
+	// 颜色维护
+
 	return node1
+}
+
+//   node                     x
+//  /   \     左旋转         /  \
+// T1   x   --------->   node   T3
+//     / \              /   \
+//    T2 T3            T1   T2
+func (r *RBTree) leftRotate(n *node) *node {
+	x := n.Right
+
+	// 旋转
+	n.Right = x.Left
+	x.Left = n
+	x.black = n.black
+	n.black = false
+
+	return x
+}
+
+//     node                   x
+//    /   \     右旋转       /  \
+//   x    T2   ------->   y   node
+//  / \                       /  \
+// y  T1
+func (r *RBTree) rightRotate(n *node) *node {
+	x := n.Left
+
+	// 旋转
+	n.Left = x.Right
+	x.Right = n
+	x.black = n.black
+	n.black = false
+
+	return x
+}
+
+// 颜色反转
+func (r *RBTree) flipColors(n *node) {
+	n.black = !n.black
+	n.Left.black = !n.Left.black
+	n.Right.black = !n.Right.black
 }
 
 // 前序遍历
