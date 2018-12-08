@@ -47,9 +47,10 @@ func (b *BST) add(node1 *node, item Item) *node {
 
 	if item.Less(node1.item) {
 		node1.Left = b.add(node1.Left, item)
-	}
-	if node1.item.Less(item) {
+	} else if node1.item.Less(item) {
 		node1.Right = b.add(node1.Right, item)
+	} else {
+		node1.item = item
 	}
 
 	return node1
