@@ -29,7 +29,7 @@ type node struct {
 
 // 辅助函数
 // 空结点为黑色
-func (n *node) isRed() bool {
+func isRed(n *node) bool {
 	if n == nil || n.black {
 		return false
 	}
@@ -57,23 +57,37 @@ func (r *RBTree) Add(item Item) {
 
 // 私有方法：添加结点
 // 在以node1为根结点的二叉搜索树中添加结点node2
-func (r *RBTree) add(node1 *node, item Item) *node {
-	if node1 == nil {
+func (r *RBTree) add(n *node, item Item) *node {
+	if n == nil {
 		r.size++
 		return newNode(item)
 	}
 
-	if item.Less(node1.item) {
-		node1.Left = r.add(node1.Left, item)
-	} else if node1.item.Less(item) {
-		node1.Right = r.add(node1.Right, item)
+	if item.Less(n.item) {
+		n.Left = r.add(n.Left, item)
+	} else if n.item.Less(item) {
+		n.Right = r.add(n.Right, item)
 	} else {
-		node1.item = item
+		n.item = item
 	}
 
 	// 颜色维护
+	// 左旋转
+	if !isRed(n.Left) && isRed(n.Right) { // 说明是往一个二结点的右边插入了一个新结点
+		n = r.leftRotate(n)
+	}
 
-	return node1
+	// 右旋转
+	if isRed(n.Left) && isRed(n.Left.Left) { // 说明是往一个三结点的左边插入了一个新结点
+		n = r.rightRotate(n)
+	}
+
+	// 颜色反转
+	if isRed(n.Left) && isRed(n.Right) { // 往一个三结点右边插入了一个新结点，保持红黑树属性
+		r.flipColors(n)
+	}
+
+	return n
 }
 
 //   node                     x
