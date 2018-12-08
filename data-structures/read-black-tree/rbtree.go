@@ -221,7 +221,7 @@ func (r *RBTree) removeMax(node *node) *node {
 }
 
 // 查找二叉搜索树
-func (r *RBTree) Find(item Item) Item {
+func (r *RBTree) Find1(item Item) Item {
 	n := r.find(r.root, item)
 	// 必须要验证返回值是否为nil
 	if n == nil {
@@ -246,7 +246,7 @@ func (r *RBTree) find(n *node, item Item) *node {
 }
 
 // 查找循环实现
-func (r *RBTree) Find1(item Item) Item {
+func (r *RBTree) Find(item Item) Item {
 	n := r.root
 	for n != nil {
 		switch {
