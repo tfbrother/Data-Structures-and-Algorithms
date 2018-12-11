@@ -119,7 +119,7 @@ func QuickSort3(arr []int) {
 	return
 }
 
-// 采用三路快速排序法，将相等的元素近似平均分部在左右两个部分
+// 采用三路快速排序法
 func partition3(arr []int) (int, int) {
 	rand.Seed(time.Now().UnixNano())
 	r := rand.Int() % len(arr)
@@ -238,6 +238,12 @@ func partition5(arr []int) (int, int) {
 	}
 	medianOfThree(arr, 0, m, n-1)
 
+	return BentleyMcIlroyPartition(arr)
+}
+
+func ErrPartition5(arr []int) (int, int) {
+	n := len(arr)
+
 	// TODO 边界条件中存在bug
 	a, b, c, d := 1, 1, n-1, n-1
 	for {
@@ -257,7 +263,7 @@ func partition5(arr []int) (int, int) {
 			if arr[c-1] > arr[0] {
 				c--
 			} else if arr[c-1] == arr[0] {
-				arr[c], arr[d-1] = arr[d-1], arr[b]
+				arr[c], arr[d-1] = arr[d-1], arr[c-1]
 				c--
 				d--
 			} else { // arr[b] >arr[1]
@@ -291,7 +297,7 @@ func partition5(arr []int) (int, int) {
 
 // 主要用于测试QuickSort5的边界条件设置的是否合理
 // 输入 [20 9 8 7 1]
-// 输出 [7 8 1 9 20]
+// 输出 [1 7 8 9 20]
 func ErrQuickSort5(arr []int) {
 	if len(arr) > 1 {
 		i, j := ErrPartition5(arr)
@@ -302,11 +308,27 @@ func ErrQuickSort5(arr []int) {
 	return
 }
 
-func ErrPartition5(arr []int) (int, int) {
+//BentleyMcIlroyPartition
+func BentleyMcIlroyPartition(arr []int) (int, int) {
 	n := len(arr)
-	// TODO 这种边界的设置，边界条件设置非常有技巧
-	a, b, c, d := 1, 1, n-1, n-1
+	// TODO 这种边界的设置，边界条件设置非常有技巧，下面的约束条件一定要理解清楚。
+	// Invariants are:
+	//	data[0] = pivot (set up by ChoosePivot)
+	//	data[0 <= i < a] = pivot
+	//	data[a <= i < b] < pivot
+	//	data[b <= i < c] is unexamined
+	//	data[c <= i < d] > pivot
+	//	data[d <= i < n] = pivot
+	// 1.a指向的前一个元素就是左边最后一个等于pivot的元素，所以初始时a=1，
+	// 2.b指向的元素表示第一个待比较的元素。所以初始时a=1，结束时b可能指向的是一个不存在的元素，初始值设置为b=1
+	// (此时一直从左往右比较交换，b最后一次指向的就是数组最后一个索引位置的后一个索引，越界)。
+	// 此时data[a <= i < b]这个区间为空，data[a <= i < b]也为空
+	// 3.c指向的是左边第一个大于pivot的元素，初始情况下，这个元素应该是不存在的。所以初始值应该设置为：c=n，此时data[c <= i < d]这个区间也为空。
+	// 4.d指向的是右边第一个等于pivot的元素，初始情况下，这个元素应该也是不存在的。所以初始值应该设置为：d=n，此时data[d <= i < n]这个区间也为空。
+	// 这样的初始值设置，都满足约束条件
+	a, b, c, d := 1, 1, n, n
 	// TODO 思考，这个循环跳出的时候，b和c之间的值是怎么样的？
+	// b>=c 都有可能。
 	for {
 		// 假设我们整个数组里面arr[b] < arr[0] || arr[b] == arr[0]都成立，则只需要执行这一个for循环即完成了这组划分。
 		// 如果c的初始值设置成c=n-1，那么arr[n-1] 将无法和 arr[0]比较。
@@ -324,10 +346,10 @@ func ErrPartition5(arr []int) (int, int) {
 		}
 
 		for b < c {
-			if arr[c] > arr[0] {
+			if arr[c-1] > arr[0] {
 				c--
-			} else if arr[c] == arr[0] {
-				arr[c], arr[d] = arr[d], arr[b]
+			} else if arr[c-1] == arr[0] {
+				arr[c-1], arr[d-1] = arr[d-1], arr[c-1]
 				c--
 				d--
 			} else { // arr[b] >arr[1]
@@ -338,20 +360,20 @@ func ErrPartition5(arr []int) (int, int) {
 		if b >= c {
 			break
 		}
-		arr[b], arr[c] = arr[c], arr[b]
+		arr[b], arr[c-1] = arr[c-1], arr[b]
 		b++
 		c--
 	}
 
-	e := b
-	for i := 0; i <= e; i++ {
+	e := b - 1
+	for i := 0; i < a; i++ {
 		arr[e], arr[i] = arr[i], arr[e]
 		e--
 	}
 
 	f := n - 1
-	for i := c; i <= f; i++ {
-		arr[f], arr[i] = arr[i], arr[f]
+	for i := 0; i < n-d; i++ {
+		arr[f], arr[i+c] = arr[i+c], arr[f]
 		f--
 	}
 
