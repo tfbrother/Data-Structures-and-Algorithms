@@ -260,10 +260,10 @@ func ErrPartition5(arr []int) (int, int) {
 		}
 
 		for b < c {
-			if arr[c-1] > arr[0] {
+			if arr[c] > arr[0] {
 				c--
 			} else if arr[c-1] == arr[0] {
-				arr[c], arr[d-1] = arr[d-1], arr[c-1]
+				arr[c], arr[d-1] = arr[d-1], arr[c]
 				c--
 				d--
 			} else { // arr[b] >arr[1]
@@ -274,14 +274,13 @@ func ErrPartition5(arr []int) (int, int) {
 		if b >= c {
 			break
 		}
-		arr[b], arr[c-1] = arr[c-1], arr[b]
+		arr[b], arr[c] = arr[c], arr[b]
 		b++
 		c--
 	}
 
 	e := b
 	for i := 0; i <= e; i++ {
-
 		arr[e], arr[i] = arr[i], arr[e]
 		e--
 	}
