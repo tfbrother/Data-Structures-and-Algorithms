@@ -74,9 +74,13 @@ func bench(b *testing.B, size int, algo func([]int), name string) {
 	}
 }
 
+func BenchmarkSort51e2(b *testing.B) { bench(b, 1e2, QuickSort5, "QuickSort5") }
+
 func BenchmarkSort41e2(b *testing.B) { bench(b, 1e2, QuickSort4, "QuickSort4") }
-func BenchmarkSort41e4(b *testing.B) { bench(b, 1e4, QuickSort4, "QuickSort4") }
-func BenchmarkSort41e6(b *testing.B) { bench(b, 1e6, QuickSort4, "QuickSort4") }
+
+//func BenchmarkSort41e4(b *testing.B) { bench(b, 1e4, QuickSort4, "QuickSort4") }
+//func BenchmarkSort41e6(b *testing.B) { bench(b, 1e6, QuickSort4, "QuickSort4") }
 func BenchmarkSort31e2(b *testing.B) { bench(b, 1e2, QuickSort3, "QuickSort3") }
-func BenchmarkSort31e4(b *testing.B) { bench(b, 1e4, QuickSort3, "QuickSort3") }
-func BenchmarkSort31e6(b *testing.B) { bench(b, 1e6, QuickSort3, "QuickSort3") }
+
+//func BenchmarkSort31e4(b *testing.B) { bench(b, 1e4, QuickSort3, "QuickSort3") }
+//func BenchmarkSort31e6(b *testing.B) { bench(b, 1e6, QuickSort3, "QuickSort3") }

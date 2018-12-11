@@ -106,6 +106,7 @@ func partition2(arr []int) (i int) {
 
 // 针对有很多重复元素情况的优化版本
 // 三路快速排序算法
+// 缺点：对于序列中重复值不多的情况下，它比传统的2分区快速排序需要更多的交换次数。
 func QuickSort3(arr []int) {
 	if len(arr) <= 1 {
 		return
@@ -144,6 +145,7 @@ func partition3(arr []int) (int, int) {
 }
 
 // 三路快速排序算法改进版
+// 三向切分法选择中轴点
 func QuickSort4(arr []int) {
 	if len(arr) > 12 {
 		i, j := partition4(arr)
@@ -205,6 +207,84 @@ func medianOfThree(arr []int, m1, m0, m2 int) {
 		}
 	}
 	// now data[m0] <= data[m1] <= data[m2]
+}
+
+// Quicksort5, following Bentley and McIlroy,
+// ``Engineering a Sort Function,'' SP&E November 1993.
+// 思路：在普通的三分区快速排序的基础上，对一般的快速排序进行了改进。在划分过程中，i遇到的与v相等的元素交换到最左边，
+// j遇到的与v相等的元素交换到最右边，i与j相遇后再把数组两端与v相等的元素交换到中间
+func QuickSort5(arr []int) {
+	if len(arr) > 12 {
+		i, j := partition5(arr)
+		QuickSort4(arr[0:i])
+		QuickSort4(arr[j:])
+	}
+
+	if len(arr) > 1 { // 数据量较小时，采用插入排序更优
+		InsertionSortNew(arr)
+	}
+	return
+}
+
+func partition5(arr []int) (int, int) {
+	n := len(arr)
+	m := n / 2
+	//Tukey’s ninthe
+	if n > 40 {
+		s := n / 8
+		medianOfThree(arr, 0, s, 2*s)
+		medianOfThree(arr, m, m-s, m+s)
+		medianOfThree(arr, n-1, n-1-s, n-1-2*s)
+	}
+	medianOfThree(arr, 0, m, n-1)
+
+	a, b, c, d := 1, 1, n-1, n-1
+	for {
+		for b < c {
+			if arr[b] < arr[0] {
+				b++
+			} else if arr[b] == arr[0] {
+				arr[b], arr[a] = arr[a], arr[b]
+				a++
+				b++
+			} else { // arr[b] >arr[0]
+				break
+			}
+		}
+
+		for b < c {
+			if arr[c] > arr[0] {
+				c--
+			} else if arr[c] == arr[0] {
+				arr[c], arr[d] = arr[d], arr[b]
+				c--
+				d--
+			} else { // arr[b] >arr[1]
+				break
+			}
+		}
+
+		if b >= c {
+			break
+		}
+		arr[b], arr[c] = arr[c], arr[b]
+		b++
+		c--
+	}
+
+	e := b
+	for i := 0; i <= e; i++ {
+		arr[e], arr[i] = arr[i], arr[e]
+		e--
+	}
+
+	f := n - 1
+	for i := c; i <= f; i++ {
+		arr[f], arr[i] = arr[i], arr[f]
+		f--
+	}
+
+	return b - a, n - d + c
 }
 
 // IsSorted reports whether data is sorted.
