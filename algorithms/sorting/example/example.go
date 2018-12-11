@@ -57,11 +57,15 @@ func main() {
 	sorting.QuickSort3(arr6)
 	fmt.Println(arr6)
 
-	// 堆排序
-	fmt.Println("==========堆排序===========")
-	myarr = util.GenrateRandomArray(30, 10, 100)
-	fmt.Println(myarr)
-	sorting.HeapSort(myarr)
+	arr7 := []int{20, 9, 8, 7, 1}
+	sorting.ErrQuickSort5(arr7)
+	fmt.Println(arr7)
 
-	fmt.Println(myarr)
+	// 堆排序
+	//fmt.Println("==========堆排序===========")
+	//myarr = util.GenrateRandomArray(30, 10, 100)
+	//fmt.Println(myarr)
+	//sorting.HeapSort(myarr)
+	//
+	//fmt.Println(myarr)
 }

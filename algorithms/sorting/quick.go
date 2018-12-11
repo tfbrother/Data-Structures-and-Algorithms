@@ -216,8 +216,8 @@ func medianOfThree(arr []int, m1, m0, m2 int) {
 func QuickSort5(arr []int) {
 	if len(arr) > 12 {
 		i, j := partition5(arr)
-		QuickSort4(arr[0:i])
-		QuickSort4(arr[j:])
+		QuickSort5(arr[0:i])
+		QuickSort5(arr[j:])
 	}
 
 	if len(arr) > 1 { // 数据量较小时，采用插入排序更优
@@ -238,8 +238,79 @@ func partition5(arr []int) (int, int) {
 	}
 	medianOfThree(arr, 0, m, n-1)
 
+	// TODO 边界条件中存在bug
 	a, b, c, d := 1, 1, n-1, n-1
 	for {
+		for b < c {
+			if arr[b] < arr[0] {
+				b++
+			} else if arr[b] == arr[0] {
+				arr[b], arr[a] = arr[a], arr[b]
+				a++
+				b++
+			} else { // arr[b] >arr[0]
+				break
+			}
+		}
+
+		for b < c {
+			if arr[c-1] > arr[0] {
+				c--
+			} else if arr[c-1] == arr[0] {
+				arr[c], arr[d-1] = arr[d-1], arr[b]
+				c--
+				d--
+			} else { // arr[b] >arr[1]
+				break
+			}
+		}
+
+		if b >= c {
+			break
+		}
+		arr[b], arr[c-1] = arr[c-1], arr[b]
+		b++
+		c--
+	}
+
+	e := b
+	for i := 0; i <= e; i++ {
+
+		arr[e], arr[i] = arr[i], arr[e]
+		e--
+	}
+
+	f := n - 1
+	for i := c; i <= f; i++ {
+		arr[f], arr[i] = arr[i], arr[f]
+		f--
+	}
+
+	return b - a, n - d + c
+}
+
+// 主要用于测试QuickSort5的边界条件设置的是否合理
+// 输入 [20 9 8 7 1]
+// 输出 [7 8 1 9 20]
+func ErrQuickSort5(arr []int) {
+	if len(arr) > 1 {
+		i, j := ErrPartition5(arr)
+		ErrQuickSort5(arr[0:i])
+		ErrQuickSort5(arr[j:])
+	}
+
+	return
+}
+
+func ErrPartition5(arr []int) (int, int) {
+	n := len(arr)
+	// TODO 这种边界的设置，边界条件设置非常有技巧
+	a, b, c, d := 1, 1, n-1, n-1
+	// TODO 思考，这个循环跳出的时候，b和c之间的值是怎么样的？
+	for {
+		// 假设我们整个数组里面arr[b] < arr[0] || arr[b] == arr[0]都成立，则只需要执行这一个for循环即完成了这组划分。
+		// 如果c的初始值设置成c=n-1，那么arr[n-1] 将无法和 arr[0]比较。
+		// 如果条件设置为b<n或者b<c+1，都会存在数组访问越界。
 		for b < c {
 			if arr[b] < arr[0] {
 				b++
