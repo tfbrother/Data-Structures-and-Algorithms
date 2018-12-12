@@ -221,6 +221,19 @@ func (b *BST) minNum(node *node) *node {
 	return b.minNum(node.Left)
 }
 
+// 循环实现
+func (b *BST) MinNumCircul() (item Item) {
+	if !b.Empty() {
+		n := b.root
+		for n.Left != nil {
+			n = n.Left
+		}
+		item = n.item
+	}
+
+	return
+}
+
 // 获取最大值，根据二叉搜索树的定义，最右边的右结点就是这个最大值
 func (b *BST) MaxNum() Item {
 	return (b.maxNum(b.root)).item
@@ -233,6 +246,19 @@ func (b *BST) maxNum(node *node) *node {
 	}
 
 	return b.maxNum(node.Right)
+}
+
+// 循环实现
+func (b *BST) MaxNumCircul() (item Item) {
+	if !b.Empty() {
+		n := b.root
+		for n.Right != nil {
+			n = n.Right
+		}
+		item = n.item
+	}
+
+	return
 }
 
 // 删除二叉树的最小值

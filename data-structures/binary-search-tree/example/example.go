@@ -62,8 +62,12 @@ func main() {
 
 	minNum := BST.MinNum()
 	fmt.Println("最小值为：", minNum)
+	minNum = BST.MinNumCircul()
+	fmt.Println("最小值为：", minNum)
 
 	maxNum := BST.MaxNum()
+	fmt.Println("最大值为：", maxNum)
+	maxNum = BST.MaxNumCircul()
 	fmt.Println("最大值为：", maxNum)
 
 	BST.RemoveMin()
