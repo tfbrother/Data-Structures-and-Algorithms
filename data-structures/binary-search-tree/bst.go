@@ -194,7 +194,9 @@ func (b *BST) removeMin(node *node) *node {
 	//如果最小值是叶子结点，就直接删除即可
 	//如果最小值是非叶子结点（只有右子树），则删除后，把右子树作为移动到该元素的位置即可
 	if node.Left == nil { //nil可以看成一个二叉搜索树的根结点，所以不用去检测右子树是否为nil
-		return node.Right
+		retNode := node.Right
+		node = nil //手动删除node，虽然go有GC
+		return retNode
 	}
 
 	node.Left = b.removeMin(node.Left)
@@ -210,7 +212,9 @@ func (b *BST) RemoveMax() {
 // 删除以node为根的二叉搜索树，返回的是新树的根结点
 func (b *BST) removeMax(node *node) *node {
 	if node.Right == nil {
-		return node.Left
+		retNode := node.Left
+		node = nil //手动删除node，虽然go有GC
+		return retNode
 	}
 
 	node.Right = b.removeMax(node.Right)
@@ -290,8 +294,9 @@ func (b *BST) remove(n *node, item Item) *node {
 			// 用过这个结点顶替待删除结点即可，因此上面的查找最小值函数minNum应该修改为返回Node指针
 
 			successor := b.minNum(n.Right)
-			successor.Right = b.removeMin(n.Left)
+			successor.Right = b.removeMin(n.Right)
 			successor.Left = n.Left
+			n = nil //删除n结点
 			return successor
 		}
 	}

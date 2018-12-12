@@ -48,29 +48,32 @@ func main() {
 	BST.LevelOrder()
 	fmt.Println()
 
-	//minNum := BST.MinNum()
-	//fmt.Println("二叉搜索树的最小值为：", minNum)
-	//
-	//maxNum := BST.MaxNum()
-	//fmt.Println("二叉搜索树的最大值为：", maxNum)
-	//
-	//BST.RemoveMin()
-	//fmt.Println("删除最小值的，前序遍历")
-	//BST.PrevOrder()
-	//
-	//BST.RemoveMax()
-	//fmt.Println("删除最大值的，前序遍历")
-	//BST.PrevOrder()
-	//
-	//node := &Node{201, "tfbrother201"}
-	//found := BST.Find(node)
-	//if found != nil {
-	//	fmt.Println("查找数据，", found.ToString())
-	//} else {
-	//	fmt.Println("没有查找到，", node.ToString())
-	//}
-	//
-	//BST.Remove(&Node{98, "tfbrother200"})
-	//fmt.Println("删除任意值，比如98后的，前序遍历")
-	//BST.PrevOrder()
+	minNum := BST.MinNum()
+	fmt.Println("二叉搜索树的最小值为：", minNum)
+
+	maxNum := BST.MaxNum()
+	fmt.Println("二叉搜索树的最大值为：", maxNum)
+
+	BST.RemoveMin()
+	fmt.Println("删除最小值的，前序遍历")
+	BST.PrevOrder()
+	fmt.Println()
+
+	BST.RemoveMax()
+	fmt.Println("删除最大值的，前序遍历")
+	BST.PrevOrder()
+	fmt.Println()
+
+	node := &Node{201, "tfbrother201"}
+	found := BST.Find(node)
+	if found != nil {
+		fmt.Println("查找数据，", found.ToString())
+	} else {
+		fmt.Println("没有查找到，", node.ToString())
+	}
+
+	BST.Remove(&Node{100, "tfbrother200"})
+	fmt.Println("删除任意值，比如100后的，前序遍历")
+	BST.PrevOrder()
+	fmt.Println()
 }
