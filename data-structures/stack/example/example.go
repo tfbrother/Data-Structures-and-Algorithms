@@ -5,18 +5,18 @@ import (
 )
 
 func main() {
-	var capacity, i stack.Node
+	var capacity int
 	capacity = 10
 	s := stack.NewStack(int(capacity))
-	for i = 0; i < capacity; i++ {
-		s.PushNode(i)
+	for i := 0; i < capacity; i++ {
+		s.Push(i)
 	}
 
 	s.Dump() //9,8,7,6,5,4,3,2,1,0
 
-	s.PopNode()
-	s.PopNode()
-	s.PopNode()
-	s.PopNode()
+	s.Pop()
+	s.Pop()
+	s.Pop()
+	s.Pop()
 	s.Dump() //5,4,3,2,1,0
 }

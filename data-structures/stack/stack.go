@@ -2,18 +2,16 @@ package stack
 
 import "log"
 
-type Node int
-
 type Stack struct {
-	head     int    // 栈顶索引
-	tail     int    // 栈底索引
-	nodes    []Node // 所有的数据
-	len      int    // 栈的长度
-	capacity int    // 栈的容量
+	head     int           // 栈顶索引
+	tail     int           // 栈底索引
+	nodes    []interface{} // 所有的数据
+	len      int           // 栈的长度
+	capacity int           // 栈的容量
 }
 
 // 入栈
-func (s *Stack) PushNode(node Node) bool {
+func (s *Stack) Push(node interface{}) bool {
 	if s.Full() {
 		return false
 	}
@@ -25,7 +23,7 @@ func (s *Stack) PushNode(node Node) bool {
 }
 
 // 出栈
-func (s *Stack) PopNode() (node Node, flag bool) {
+func (s *Stack) Pop() (node interface{}, flag bool) {
 	if s.Empty() {
 		return
 	}
@@ -69,7 +67,7 @@ func NewStack(capacity int) *Stack {
 	return &Stack{
 		head:     0,
 		tail:     0,
-		nodes:    make([]Node, capacity),
+		nodes:    make([]interface{}, capacity),
 		len:      0,
 		capacity: capacity,
 	}
