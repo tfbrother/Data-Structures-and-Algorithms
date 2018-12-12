@@ -35,6 +35,15 @@ func (s *Stack) Pop() (node interface{}) {
 	return
 }
 
+// 查看栈顶元素
+func (s *Stack) Peek() (node interface{}) {
+	if s.Empty() {
+		return
+	}
+
+	return s.nodes[s.head-1]
+}
+
 // 返回栈的长度
 func (s *Stack) Len() int {
 	return s.len
