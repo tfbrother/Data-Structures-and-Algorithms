@@ -23,11 +23,11 @@ func (s *Stack) Push(node interface{}) bool {
 }
 
 // 出栈
-func (s *Stack) Pop() (node interface{}, flag bool) {
+func (s *Stack) Pop() (node interface{}) {
 	if s.Empty() {
 		return
 	}
-	flag = true
+
 	node = s.nodes[s.head-1]
 	s.nodes[s.head-1] = 0
 	s.head--

@@ -7,7 +7,7 @@ import (
 func main() {
 	var capacity int
 	capacity = 10
-	s := stack.NewStack(int(capacity))
+	s := stack.NewStack(capacity)
 	for i := 0; i < capacity; i++ {
 		s.Push(i)
 	}
