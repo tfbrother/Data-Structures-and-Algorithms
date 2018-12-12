@@ -1,6 +1,9 @@
 package binary_search_tree
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/queue"
+)
 
 /**
 二叉搜索树
@@ -85,17 +88,31 @@ func (b *BST) InOrder() {
 	b.inOrder(b.root)
 }
 
-// 用栈模拟递归
-func (b *BST) inOrder(node *node) {
-	for node != nil {
+// 用栈
+func (b *BST) inOrder(n *node) {
 
-	}
 }
 
 // 二叉搜索树的层序遍历（广度优先遍历）
 // 需要借助队列来实现
 func (b *BST) LevelOrder() {
+	if b.Empty() {
+		return
+	}
 
+	q := queue.NewQueue(10)
+	q.Push(b.root)
+
+	for !q.Empty() {
+		n := q.Pop().(*node)
+		fmt.Println(n.item.(Item).ToString())
+		if n.Left != nil {
+			q.Push(n.Left)
+		}
+		if n.Right != nil {
+			q.Push(n.Right)
+		}
+	}
 }
 
 // 获取最小值，根据二叉搜索树的定义，最左边的左结点就是这个最小值
