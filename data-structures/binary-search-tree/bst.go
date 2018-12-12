@@ -96,7 +96,7 @@ func (b *BST) prevOrder(n *node) {
 	for !s.Empty() {
 		n = s.Pop().(*node)
 		fmt.Print(n.item.ToString(), " ")
-		// 有右子树，则先从右子树开始遍历
+		// 前序遍历是先遍历左子树，后遍历右子树，因为栈是先进后出，所以把右子树先压入栈
 		if n.Right != nil {
 			s.Push(n.Right)
 		}
@@ -118,7 +118,17 @@ func (b *BST) InOrder() {
 
 // 用栈
 func (b *BST) inOrder(n *node) {
-
+	s := stack.NewStack(10)
+	for !s.Empty() || n != nil {
+		if n != nil {
+			s.Push(n)
+			n = n.Left
+		} else {
+			n = s.Pop().(*node)
+			fmt.Print(n.item.ToString(), " ")
+			n = n.Right
+		}
+	}
 }
 
 // 中序遍历递归实现
@@ -131,6 +141,48 @@ func (b *BST) inOrderRecursion(n *node) {
 		b.inOrderRecursion(n.Left)
 		fmt.Print(n.item.ToString(), " ")
 		b.inOrderRecursion(n.Right)
+	}
+}
+
+// 后序遍历，递归实现
+func (b *BST) PostOrderRecursion() {
+	b.postOrderRecursion(b.root)
+}
+
+func (b *BST) postOrderRecursion(n *node) {
+	if n != nil {
+		b.postOrderRecursion(n.Left)
+		b.postOrderRecursion(n.Right)
+		fmt.Print(n.item.ToString(), " ")
+	}
+}
+
+// 后序遍历，循环实现
+func (b *BST) PostOrder() {
+	if b.root != nil {
+		b.postOrder(b.root)
+	}
+}
+
+func (b *BST) postOrder(n *node) {
+	s := stack.NewStack(10)
+	s.Push(n)
+	s.Push(n)
+
+	for !s.Empty() {
+		n := s.Pop().(*node)
+		if !s.Empty() && n == s.Peek() {
+			if n.Right != nil {
+				s.Push(n.Right)
+				s.Push(n.Right)
+			}
+			if n.Left != nil {
+				s.Push(n.Left)
+				s.Push(n.Left)
+			}
+		} else {
+			fmt.Print(n.item.ToString(), " ")
+		}
 	}
 }
 
