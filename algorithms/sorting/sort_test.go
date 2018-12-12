@@ -9,46 +9,31 @@ import (
 	"testing"
 )
 
-func BenchmarkSortInt1K(b *testing.B) {
-	b.StopTimer()
-	for i := 0; i < b.N; i++ {
-		data := make([]int, 1<<10)
-		for i := 0; i < len(data); i++ {
-			data[i] = i ^ 0x2cc
-		}
-		b.StartTimer()
-		QuickSort4(data)
-		b.StopTimer()
-	}
-}
-
-func BenchmarkSortInt64K(b *testing.B) {
-	b.StopTimer()
-	for i := 0; i < b.N; i++ {
-		data := make([]int, 1<<16)
-		for i := 0; i < len(data); i++ {
-			data[i] = i ^ 0xcccc
-		}
-		b.StartTimer()
-		QuickSort4(data)
-		b.StopTimer()
-	}
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func lg(n int) int {
-	i := 0
-	for 1<<uint(i) < n {
-		i++
-	}
-	return i
-}
+//func BenchmarkSortInt1K(b *testing.B) {
+//	b.StopTimer()
+//	for i := 0; i < b.N; i++ {
+//		data := make([]int, 1<<10)
+//		for i := 0; i < len(data); i++ {
+//			data[i] = i ^ 0x2cc
+//		}
+//		b.StartTimer()
+//		QuickSort4(data)
+//		b.StopTimer()
+//	}
+//}
+//
+//func BenchmarkSortInt64K(b *testing.B) {
+//	b.StopTimer()
+//	for i := 0; i < b.N; i++ {
+//		data := make([]int, 1<<16)
+//		for i := 0; i < len(data); i++ {
+//			data[i] = i ^ 0xcccc
+//		}
+//		b.StartTimer()
+//		QuickSort4(data)
+//		b.StopTimer()
+//	}
+//}
 
 func bench(b *testing.B, size int, algo func([]int), name string) {
 	b.StopTimer()
@@ -81,6 +66,9 @@ func BenchmarkSort41e2(b *testing.B) { bench(b, 1e2, QuickSort4, "QuickSort4") }
 //func BenchmarkSort41e4(b *testing.B) { bench(b, 1e4, QuickSort4, "QuickSort4") }
 //func BenchmarkSort41e6(b *testing.B) { bench(b, 1e6, QuickSort4, "QuickSort4") }
 func BenchmarkSort31e2(b *testing.B) { bench(b, 1e2, QuickSort3, "QuickSort3") }
+func BenchmarkSort21e2(b *testing.B) { bench(b, 1e2, QuickSort2, "QuickSort2") }
+func BenchmarkSort11e2(b *testing.B) { bench(b, 1e2, QuickSort1, "QuickSort1") }
+func BenchmarkSort1e2(b *testing.B)  { bench(b, 1e2, QuickSort, "QuickSort") }
 
 //func BenchmarkSort31e4(b *testing.B) { bench(b, 1e4, QuickSort3, "QuickSort3") }
 //func BenchmarkSort31e6(b *testing.B) { bench(b, 1e6, QuickSort3, "QuickSort3") }

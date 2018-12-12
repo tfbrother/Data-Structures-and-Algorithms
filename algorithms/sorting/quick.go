@@ -364,6 +364,7 @@ func BentleyMcIlroyPartition(arr []int) (int, int) {
 		c--
 	}
 
+	// 为何是b-1呢？
 	e := b - 1
 	for i := 0; i < a; i++ {
 		arr[e], arr[i] = arr[i], arr[e]
