@@ -3,6 +3,7 @@ package binary_search_tree
 import (
 	"fmt"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/queue"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/stack"
 )
 
 /**
@@ -60,6 +61,25 @@ func (b *BST) add(node1 *node, item Item) *node {
 }
 
 // 前序遍历
+func (b *BST) PrevOrderRecursion() {
+	if b.Empty() {
+		return
+	}
+
+	b.prevOrderRecursion(b.root)
+}
+
+// 前序遍历：以node为根的二叉搜索树
+func (b *BST) prevOrderRecursion(node *node) {
+	if node == nil {
+		return
+	}
+	fmt.Print(node.item.ToString(), " ")
+	b.prevOrderRecursion(node.Left)
+	b.prevOrderRecursion(node.Right)
+}
+
+// 前序遍历，循环实现
 func (b *BST) PrevOrder() {
 	if b.Empty() {
 		return
@@ -69,13 +89,21 @@ func (b *BST) PrevOrder() {
 }
 
 // 前序遍历：以node为根的二叉搜索树
-func (b *BST) prevOrder(node *node) {
-	if node == nil {
-		return
+func (b *BST) prevOrder(n *node) {
+	s := stack.NewStack(10)
+	s.Push(n)
+
+	for !s.Empty() {
+		n = s.Pop().(*node)
+		fmt.Print(n.item.ToString(), " ")
+		// 有右子树，则先从右子树开始遍历
+		if n.Right != nil {
+			s.Push(n.Right)
+		}
+		if n.Left != nil {
+			s.Push(n.Left)
+		}
 	}
-	fmt.Println(node.item.ToString())
-	b.prevOrder(node.Left)
-	b.prevOrder(node.Right)
 }
 
 // 中序遍历，采用循环实现，借助栈实现
@@ -93,6 +121,19 @@ func (b *BST) inOrder(n *node) {
 
 }
 
+// 中序遍历递归实现
+func (b *BST) InOrderRecursion() {
+	b.inOrderRecursion(b.root)
+}
+
+func (b *BST) inOrderRecursion(n *node) {
+	if n != nil {
+		b.inOrderRecursion(n.Left)
+		fmt.Print(n.item.ToString(), " ")
+		b.inOrderRecursion(n.Right)
+	}
+}
+
 // 二叉搜索树的层序遍历（广度优先遍历）
 // 需要借助队列来实现
 func (b *BST) LevelOrder() {
@@ -105,7 +146,7 @@ func (b *BST) LevelOrder() {
 
 	for !q.Empty() {
 		n := q.Pop().(*node)
-		fmt.Println(n.item.(Item).ToString())
+		fmt.Print(n.item.(Item).ToString(), " ")
 		if n.Left != nil {
 			q.Push(n.Left)
 		}
