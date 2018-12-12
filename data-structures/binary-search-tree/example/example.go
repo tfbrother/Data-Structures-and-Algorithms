@@ -32,7 +32,10 @@ func main() {
 	BST.Add(&Node{101, "tfbrother101"})
 	BST.Add(&Node{299, "tfbrother299"})
 
+	fmt.Println("二叉搜索树前序遍历结果为：")
 	BST.PrevOrder()
+	fmt.Println("二叉搜索树层序遍历结果为：")
+	BST.LevelOrder()
 
 	minNum := BST.MinNum()
 	fmt.Println("二叉搜索树的最小值为：", minNum)
