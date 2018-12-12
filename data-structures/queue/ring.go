@@ -3,18 +3,16 @@ package queue
 
 import "log"
 
-type Node int
-
 type RingQueue struct {
-	head     int    // 头部索引
-	tail     int    // 尾部索引
-	nodes    []Node // 所有的数据
-	len      int    // 队列的长度
-	capacity int    // 队列的容量
+	head     int           // 头部索引
+	tail     int           // 尾部索引
+	nodes    []interface{} // 所有的数据
+	len      int           // 队列的长度
+	capacity int           // 队列的容量
 }
 
 // 入队列
-func (r *RingQueue) PushNode(node Node) bool {
+func (r *RingQueue) Push(node interface{}) bool {
 	if r.Full() {
 		return false
 	}
@@ -27,7 +25,7 @@ func (r *RingQueue) PushNode(node Node) bool {
 }
 
 // 出队列
-func (r *RingQueue) PopNode() (node Node, flag bool) {
+func (r *RingQueue) Pop() (node interface{}, flag bool) {
 	if r.Empty() {
 		return
 	}
@@ -72,7 +70,7 @@ func NewRingQueue(capacity int) *RingQueue {
 	return &RingQueue{
 		head:     0,
 		tail:     0,
-		nodes:    make([]Node, capacity),
+		nodes:    make([]interface{}, capacity),
 		len:      0,
 		capacity: capacity,
 	}
