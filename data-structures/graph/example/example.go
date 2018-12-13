@@ -54,4 +54,25 @@ func main() {
 	fmt.Println("克鲁斯卡最小生成数算法")
 	gmap.ResetNode()
 	gmap.KruskalTree()
+
+	fmt.Println("\n\n\n=============稠密无向图测试=============")
+	d := graph.NewDenseGraph(10, false)
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			d.AddEdge(i, j)
+		}
+	}
+	fmt.Println("边数量：", d.EdgeCount())
+	fmt.Println("结点数量：", d.NodeCount())
+
+	fmt.Println("\n\n\n=============广度遍历优先=============")
+	d.BreadthFirstTraverse(1)
+	fmt.Println()
+	fmt.Println()
+
+	fmt.Println("\n\n\n=============深度遍历优先=============")
+	d.ResetVisted()
+	d.DepthFirstTraverse(1)
+	fmt.Println()
+	fmt.Println()
 }
