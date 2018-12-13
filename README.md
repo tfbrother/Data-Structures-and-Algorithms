@@ -11,8 +11,9 @@ Algorithms & Data Structures in Go
 ### 单链表
 ### 循环链表
 ### 双向链表
-
-### 2、[环形队列](data-structures/queue/ring.go)
+### 2、队列
+#### [普通队列](data-structures/queue/queue.go)
+#### [环形队列](data-structures/queue/ring.go)
 * 核心是注意tail可能比head小
 * 先入先出（FIFO）
 
@@ -33,7 +34,11 @@ Algorithms & Data Structures in Go
 ### 3、[堆](data-structures/heap/)
 * 最大堆/最小堆
 
-### [trie](data-structures/trie/)
+### 4、[AVL树](data-structures/avl-tree/)
+### 5、[红黑树](data-structures/read-black-tree/)
+### 6、[并查集](data-structures/union-find/)
+### 7、[集合](data-structures/set/)
+### 8.[trie](data-structures/trie/)
 * 字典树/前缀树
 
 ## 三、图形结构
