@@ -25,7 +25,7 @@ func (u *UnionFind) Find(a int) int {
 	}
 
 	// 不断去查询自己的父亲节点, 直到到达根节点
-	// 根节点的特点: parent[p] == p
+	// 根节点的特点: parent[a] == a
 	for a != u.parent[a] {
 		a = u.parent[a]
 	}
@@ -43,6 +43,51 @@ func (u *UnionFind) Union(a int, b int) {
 	aParentId, bParentId := u.Find(a), u.Find(b)
 	if aParentId != bParentId {
 		u.parent[aParentId] = bParentId //进行合并
+	}
+}
+
+// TODO 基于size的优化=======================
+// 合并元素a和元素b所在的集合。
+func (u *UnionFind) UnionS(a int, b int) {
+	aParentId, bParentId := u.Find(a), u.Find(b)
+	if aParentId != bParentId {
+		if u.size[aParentId] > u.size[bParentId] {
+			u.parent[bParentId] = aParentId //进行合并
+			u.size[aParentId] += 1
+		} else {
+			u.parent[aParentId] = bParentId //进行合并
+			u.size[bParentId] += 1
+		}
+
+	}
+}
+
+// TODO 基于rank的优化=======================
+func (u *UnionFind) FindR(a int) int {
+	if a < 0 || a > u.count {
+		return -1
+	}
+
+	// 不断去查询自己的父亲节点, 直到到达根节点
+	for a != u.parent[a] {
+		u.parent[a] = u.parent[u.parent[a]] // 路径压缩的代码，就这一行，每次压缩一个
+		a = u.parent[a]
+	}
+	return a
+}
+
+// 合并元素a和元素b所在的集合。
+func (u *UnionFind) UnionR(a int, b int) {
+	aParentId, bParentId := u.Find(a), u.Find(b)
+	if aParentId != bParentId {
+		if u.rank[aParentId] > u.rank[bParentId] {
+			u.parent[bParentId] = aParentId //进行合并
+			u.rank[aParentId] += 1
+		} else {
+			u.parent[aParentId] = bParentId //进行合并
+			u.rank[bParentId] += 1
+		}
+
 	}
 }
 
