@@ -8,6 +8,7 @@ package union_find
 	2.合并元素a和元素b所在的集合。
 	3.查询元素a在那一集合
 	4.添加元素a
+应用习题：https://www.cnblogs.com/douzujun/category/1003909.html
 */
 
 type UnionFind struct {
