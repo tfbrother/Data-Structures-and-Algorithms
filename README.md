@@ -38,7 +38,7 @@ Algorithms & Data Structures in Go
 ### 5、[红黑树](data-structures/read-black-tree/)
 ### 6、[并查集](data-structures/union-find/)
 ### 7、[集合](data-structures/set/)
-### 8.[trie](data-structures/trie/)
+### 8、[trie](data-structures/trie/)
 * 字典树/前缀树
 
 ## 三、图形结构
