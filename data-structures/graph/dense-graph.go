@@ -89,7 +89,7 @@ func (d *DenseGraph) BreadthFirstTraverse(v int) {
 }
 
 // 重置所有的访问状态，用于测试用
-func (d *DenseGraph) ResetVisted() {
+func (d *DenseGraph) ResetStatus() {
 	d.visited = make([]bool, d.nodeCount)
 }
 

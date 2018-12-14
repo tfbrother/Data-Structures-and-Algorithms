@@ -71,7 +71,7 @@ func main() {
 	fmt.Println()
 
 	fmt.Println("\n\n\n=============深度遍历优先=============")
-	d.ResetVisted()
+	d.ResetStatus()
 	d.DepthFirstTraverse(1)
 	fmt.Println()
 	fmt.Println()
