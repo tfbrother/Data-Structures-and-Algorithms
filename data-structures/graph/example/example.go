@@ -22,4 +22,20 @@ func main() {
 	if len(rs) != 8 {
 		fmt.Printf("should be 8 vertices but %s\n", g)
 	}
+
+	f.Seek(0, 0)
+	g, err = graph.NewGraphFromJSON(f, "graph_13")
+	if err != nil {
+		fmt.Println(err)
+	}
+	A := graph.Kruskal(g)
+
+	total := 0.0
+	for _, edge := range A {
+		total += edge.Weight()
+	}
+	if total != 37.0 {
+		fmt.Println("Expected total 37.0 but %.2f", total)
+	}
+	fmt.Println("Kruskal from graph_13:", A)
 }
