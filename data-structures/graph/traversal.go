@@ -116,6 +116,8 @@ func DFSRecursion(g Graph, id ID) []ID {
 
 	visited := make(map[ID]bool)
 	ret := make([]ID, 0)
+	// TODO see slice usage and internals https://blog.golang.org/go-slices-usage-and-internals
+	// To increase the capacity of a slice one must create a new, larger slice and copy the contents of the original slice into it.
 	dfsRecursion(g, id, visited, &ret)
 
 	return ret
