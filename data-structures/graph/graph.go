@@ -80,15 +80,6 @@ func (e *edge) String() string {
 	return fmt.Sprintf("%s -- %.3f -→ %s\n", e.src, e.wgt, e.tgt)
 }
 
-// implemented sort.Interface
-type EdgeSlice []Edge
-
-func (e EdgeSlice) Len() int { return len(e) }
-func (e EdgeSlice) Less(i, j int) bool {
-	return e[i].Weight() < e[j].Weight()
-}
-func (e EdgeSlice) Swap(i, j int) { e[i], e[j] = e[j], e[i] }
-
 // Graph describes the methods of graph operations.
 // It assumes that the identifier of a Node is unique.
 // And weight values is float64
@@ -138,6 +129,8 @@ type Graph interface {
 
 	// GetAllEdges returns the all edges
 	GetAllEdges() []Edge
+
+	GetNodeEdges(id1 ID) []Edge
 }
 
 // graph is an internal default graph type that
@@ -300,6 +293,44 @@ func (g *graph) GetAllEdges() []Edge {
 		if err != nil {
 			continue
 		}
+		for id3, nd3 := range sm {
+			weight, err := g.GetWeight(id3, id1)
+			if err != nil {
+				continue
+			}
+			edge := NewEdge(nd3, nd1, weight)
+			if _, ok := foundEdge[edge.String()]; !ok {
+				allEdges = append(allEdges, edge)
+				foundEdge[edge.String()] = true
+			}
+		}
+	}
+
+	return allEdges
+}
+
+func (g *graph) GetNodeEdges(id1 ID) []Edge {
+	allEdges := make([]Edge, 0, g.GetNodeCount())
+	foundEdge := make(map[string]bool)
+	nd1 := g.idToNodes[id1]
+
+	tm, err := g.GetTargets(id1)
+	if err == nil {
+		for id2, nd2 := range tm {
+			weight, err := g.GetWeight(id1, id2)
+			if err != nil {
+				continue
+			}
+			edge := NewEdge(nd1, nd2, weight)
+			if _, ok := foundEdge[edge.String()]; !ok {
+				allEdges = append(allEdges, edge)
+				foundEdge[edge.String()] = true
+			}
+		}
+	}
+
+	sm, err := g.GetSources(id1)
+	if err == nil {
 		for id3, nd3 := range sm {
 			weight, err := g.GetWeight(id3, id1)
 			if err != nil {
