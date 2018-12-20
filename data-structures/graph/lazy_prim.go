@@ -8,7 +8,7 @@ type lazyPrim struct {
 	g         Graph
 	pq        *EdgeSlice
 	marked    map[ID]bool
-	mstweight float64
+	mstWeight float64
 	mst       []Edge
 }
 
@@ -18,9 +18,7 @@ func (l *lazyPrim) Visit(nd Node) {
 
 	for _, e := range edges {
 		// 将和节点nd相连接的所有未访问的边放入最小堆中
-		if !l.marked[e.Source().ID()] && e.Source().ID() != nd.ID() {
-			heap.Push(l.pq, e)
-		} else if !l.marked[e.Target().ID()] && e.Target().ID() != nd.ID() {
+		if !l.marked[e.Other(nd)] {
 			heap.Push(l.pq, e)
 		}
 	}
@@ -59,9 +57,9 @@ func (l *lazyPrim) LazyPrim(src ID) {
 		}
 	}
 
-	l.mstweight = l.mst[0].Weight()
+	l.mstWeight = l.mst[0].Weight()
 	for i := 1; i < len(l.mst); i++ {
-		l.mstweight += l.mst[i].Weight()
+		l.mstWeight += l.mst[i].Weight()
 	}
 	return
 }
