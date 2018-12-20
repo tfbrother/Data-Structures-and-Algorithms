@@ -39,6 +39,7 @@ func main() {
 	}
 	fmt.Println("Kruskal from graph_13:", A)
 
+	fmt.Println("=========start lazyPrim from graph_13:", A)
 	for v := range g.GetNodes() {
 		l := graph.NewLazyPrim(g)
 		A := l.MstEdges(v)
@@ -50,6 +51,21 @@ func main() {
 		if total != 37.0 {
 			fmt.Println("Expected total 37.0 but %.2f", total)
 		}
-		fmt.Println("Prim from graph_13:", A, "with", v)
+		fmt.Println("===========end lazyPrim from graph_13:", A, "with", v)
+	}
+
+	fmt.Println("=========start Prim from graph_13:", A)
+	for v := range g.GetNodes() {
+		l := graph.NewPrim(g)
+		A := l.MstEdges(v)
+
+		total := 0.0
+		for _, edge := range A {
+			total += edge.Weight()
+		}
+		if total != 37.0 {
+			fmt.Println("Expected total 37.0 but %.2f", total)
+		}
+		fmt.Println("===========end Prim from graph_13:", A, "with", v)
 	}
 }

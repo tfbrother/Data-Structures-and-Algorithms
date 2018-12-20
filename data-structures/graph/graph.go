@@ -48,6 +48,7 @@ type Edge interface {
 	Target() Node
 	Weight() float64
 	String() string
+	Other(nd Node) Node
 }
 
 type edge struct {
@@ -78,6 +79,14 @@ func (e *edge) Weight() float64 {
 
 func (e *edge) String() string {
 	return fmt.Sprintf("%s -- %.3f -→ %s\n", e.src, e.wgt, e.tgt)
+}
+
+func (e *edge) Other(o Node) Node {
+	if o.ID() == e.src.ID() {
+		return e.tgt
+	}
+
+	return e.src
 }
 
 // Graph describes the methods of graph operations.
