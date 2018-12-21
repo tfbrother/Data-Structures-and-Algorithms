@@ -25,27 +25,27 @@ func (e *EdgeSlice) Push(x interface{}) {
 }
 
 // min-index heap
-type nodeDistance struct {
-	nd    Node
-	e     Edge
+type NodeDistance struct {
+	Nd    Node
+	E     Edge
 	index int
 }
 
-type nodeDistaceHeap []nodeDistance
+type NodeDistaceHeap []NodeDistance
 
-func (d nodeDistaceHeap) Len() int { return len(d) }
-func (d nodeDistaceHeap) Less(i, j int) bool {
-	return d[i].e.Weight() < d[j].e.Weight()
+func (d NodeDistaceHeap) Len() int { return len(d) }
+func (d NodeDistaceHeap) Less(i, j int) bool {
+	return d[i].E.Weight() < d[j].E.Weight()
 }
 
-func (d nodeDistaceHeap) Swap(i, j int) {
+func (d NodeDistaceHeap) Swap(i, j int) {
 	d[i], d[j] = d[j], d[i]
 	d[i].index = i
 	d[j].index = j
 
 }
 
-func (d *nodeDistaceHeap) Pop() interface{} {
+func (d *NodeDistaceHeap) Pop() interface{} {
 	heapLen := len(*d)
 	lastNode := (*d)[heapLen-1]
 	*d = (*d)[:heapLen-1]
@@ -53,17 +53,17 @@ func (d *nodeDistaceHeap) Pop() interface{} {
 	return lastNode
 }
 
-func (d *nodeDistaceHeap) Push(x interface{}) {
-	nd := x.(nodeDistance)
+func (d *NodeDistaceHeap) Push(x interface{}) {
+	nd := x.(NodeDistance)
 	nd.index = len(*d)
 	*d = append(*d, nd)
 }
 
 // TODO need improve ,i.e. add a indexOf item(type map[ID]int), can directed find the index by give nd
-func (d *nodeDistaceHeap) update(nd Node, e Edge) {
+func (d *NodeDistaceHeap) Update(nd Node, e Edge) {
 	for i := 0; i < len(*d); i++ {
-		if (*d)[i].nd.ID() == nd.ID() {
-			(*d)[i].e = e
+		if (*d)[i].Nd.ID() == nd.ID() {
+			(*d)[i].E = e
 			heap.Fix(d, (*d)[i].index)
 			break
 		}

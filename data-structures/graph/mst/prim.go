@@ -8,7 +8,7 @@ import (
 // need min index heap(priority queue)
 type prim struct {
 	g         Graph
-	pq        *nodeDistaceHeap
+	pq        *NodeDistaceHeap
 	marked    map[ID]bool
 	mstWeight float64
 	mst       []Edge
@@ -27,10 +27,10 @@ func (l *prim) Visit(nd Node) {
 			// 如果从没有考虑过这个端点, 直接将这个端点和与之相连接的边加入索引堆
 			if _, ok := l.heapEdge[o.ID()]; !ok {
 				l.heapEdge[o.ID()] = e
-				heap.Push(l.pq, nodeDistance{o, e, 0})
+				heap.Push(l.pq, NodeDistance{Nd: o, E: e})
 			} else if e.Weight() < l.heapEdge[o.ID()].Weight() { // 如果曾经考虑这个端点, 但现在的边比之前考虑的边更短, 则进行替换
 				l.heapEdge[o.ID()] = e
-				l.pq.update(o, e)
+				l.pq.Update(o, e)
 			}
 		}
 	}
@@ -53,9 +53,9 @@ func (l *prim) primMst(src ID) {
 	for l.pq.Len() > 0 {
 		// 使用最小索引堆找出已经访问的边中权值最小的边
 		// 最小索引堆中存储的是点的索引, 通过点的索引找到相对应的边
-		d := heap.Pop(l.pq).(nodeDistance)
-		l.mst = append(l.mst, d.e)
-		l.Visit(d.nd)
+		d := heap.Pop(l.pq).(NodeDistance)
+		l.mst = append(l.mst, d.E)
+		l.Visit(d.Nd)
 	}
 
 	l.mstWeight = l.mst[0].Weight()
@@ -73,7 +73,7 @@ func (l *prim) MstEdges(src ID) []Edge {
 func NewPrim(g Graph) *prim {
 	l := &prim{
 		g:        g,
-		pq:       &nodeDistaceHeap{},
+		pq:       &NodeDistaceHeap{},
 		marked:   make(map[ID]bool),
 		mst:      make([]Edge, g.GetNodeCount()-1),
 		heapEdge: make(map[ID]Edge),
