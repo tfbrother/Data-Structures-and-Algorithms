@@ -140,6 +140,8 @@ type Graph interface {
 	GetAllEdges() []Edge
 
 	GetNodeEdges(id1 ID) []Edge
+
+	GetNeighborNodes(id1 ID) map[ID]Node
 }
 
 // graph is an internal default graph type that
@@ -354,6 +356,23 @@ func (g *graph) GetNodeEdges(id1 ID) []Edge {
 	}
 
 	return allEdges
+}
+
+func (g *graph) GetNeighborNodes(id1 ID) map[ID]Node {
+	ret := make(map[ID]Node)
+	tm, err := g.GetTargets(id1)
+	if err == nil {
+		ret = tm
+	}
+
+	sm, err := g.GetSources(id1)
+	if err == nil {
+		for k, v := range sm {
+			ret[k] = v
+		}
+	}
+
+	return ret
 }
 
 func (g *graph) DeleteEdge(id1, id2 ID) error {

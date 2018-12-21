@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/mst"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/path"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/traversal"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -70,4 +72,24 @@ func main() {
 		}
 		fmt.Println("===========end Prim from graph_13:", A, "with", v)
 	}
+
+	f.Seek(0, 0)
+	g, err = graph.NewGraphFromJSON(f, "graph_03")
+	if err != nil {
+		fmt.Println(err)
+	}
+	path, distance := path.Dijkstra(g, graph.StringID("S"), graph.StringID("T"))
+	fmt.Println(path, distance)
+	ts := []string{}
+	for i := len(path) - 1; i >= 0; i-- {
+		ts = append(ts, fmt.Sprintf("%s(%.2f)", path[i], distance[path[i]]))
+	}
+
+	if strings.Join(ts, " → ") != "S(0.00) → B(14.00) → E(32.00) → F(38.00) → T(44.00)" {
+		fmt.Printf("Expected the shortest path S(0.00) → B(14.00) → E(32.00) → F(38.00) → T(44.00) but %s", strings.Join(ts, " → "))
+	}
+	if distance[graph.StringID("T")] != 44.0 {
+		fmt.Printf("Expected 44.0 but %f", distance[graph.StringID("T")])
+	}
+	fmt.Println("graph_03:", strings.Join(ts, " → "))
 }
