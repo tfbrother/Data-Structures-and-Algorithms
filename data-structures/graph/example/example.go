@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/mst"
+	"github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/traversal"
 	"os"
 )
 
@@ -17,7 +19,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	rs := graph.DFSRecursion(g, graph.StringID("S"))
+	rs := traversal.DFSRecursion(g, graph.StringID("S"))
 	fmt.Println("DFSRecursion:", rs) // [S C E T A B D F]
 	if len(rs) != 8 {
 		fmt.Printf("should be 8 vertices but %s\n", g)
@@ -28,7 +30,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	A := graph.Kruskal(g)
+	A := mst.Kruskal(g)
 
 	total := 0.0
 	for _, edge := range A {
@@ -41,7 +43,7 @@ func main() {
 
 	fmt.Println("=========start lazyPrim from graph_13:", A)
 	for v := range g.GetNodes() {
-		l := graph.NewLazyPrim(g)
+		l := mst.NewLazyPrim(g)
 		A := l.MstEdges(v)
 
 		total := 0.0
@@ -56,7 +58,7 @@ func main() {
 
 	fmt.Println("=========start Prim from graph_13:", A)
 	for v := range g.GetNodes() {
-		l := graph.NewPrim(g)
+		l := mst.NewPrim(g)
 		A := l.MstEdges(v)
 
 		total := 0.0

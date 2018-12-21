@@ -1,4 +1,8 @@
-package graph
+package traversal
+
+import (
+	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
+)
 
 // BFS does breadth-first search, and returns the list of vertices.
 // (https://en.wikipedia.org/wiki/Breadth-first_search)

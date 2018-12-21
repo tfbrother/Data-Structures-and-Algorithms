@@ -1,6 +1,9 @@
-package graph
+package mst
 
-import "container/heap"
+import (
+	"container/heap"
+	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
+)
 
 // min-heap
 // implemented heap.Interface
@@ -40,6 +43,7 @@ func (d nodeDistaceHeap) Swap(i, j int) {
 	d[i], d[j] = d[j], d[i]
 	d[i].index = i
 	d[j].index = j
+
 }
 
 func (d *nodeDistaceHeap) Pop() interface{} {
@@ -56,6 +60,7 @@ func (d *nodeDistaceHeap) Push(x interface{}) {
 	*d = append(*d, nd)
 }
 
+// TODO need improve ,i.e. add a indexOf item(type map[ID]int), can directed find the index by give nd
 func (d *nodeDistaceHeap) update(nd Node, e Edge) {
 	for i := 0; i < len(*d); i++ {
 		if (*d)[i].nd.ID() == nd.ID() {

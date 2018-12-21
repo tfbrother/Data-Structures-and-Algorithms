@@ -1,7 +1,8 @@
-package graph
+package mst
 
 import (
 	"container/heap"
+	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
 )
 
 // need min index heap(priority queue)

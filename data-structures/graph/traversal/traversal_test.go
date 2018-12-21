@@ -1,14 +1,15 @@
-package graph_test
+package traversal_test
 
 import (
 	"fmt"
 	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
+	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/traversal"
 	"os"
 	"testing"
 )
 
 func TestBFS(t *testing.T) {
-	f, err := os.Open("testdata/graph.json")
+	f, err := os.Open("../testdata/graph.json")
 	if err != nil {
 		t.Error(err)
 	}
@@ -25,7 +26,7 @@ func TestBFS(t *testing.T) {
 }
 
 func TestDFS(t *testing.T) {
-	f, err := os.Open("testdata/graph.json")
+	f, err := os.Open("../testdata/graph.json")
 	if err != nil {
 		t.Error(err)
 	}
@@ -42,7 +43,7 @@ func TestDFS(t *testing.T) {
 }
 
 func TestDFSRecursion(t *testing.T) {
-	f, err := os.Open("testdata/graph.json")
+	f, err := os.Open("../testdata/graph.json")
 	if err != nil {
 		t.Error(err)
 	}

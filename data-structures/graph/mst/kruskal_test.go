@@ -1,13 +1,15 @@
-package graph
+package mst_test
 
 import (
 	"fmt"
+	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
+	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph/mst"
 	"os"
 	"testing"
 )
 
 func TestGraph_Kruskal_13(t *testing.T) {
-	f, err := os.Open("testdata/graph.json")
+	f, err := os.Open("../testdata/graph.json")
 	if err != nil {
 		t.Error(err)
 	}
