@@ -1,8 +1,7 @@
-package mst
+package graph
 
 import (
 	"container/heap"
-	. "github.com/tfbrother/Data-Structures-and-Algorithms/data-structures/graph"
 )
 
 // min-heap
