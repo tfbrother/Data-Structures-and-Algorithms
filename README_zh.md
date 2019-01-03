@@ -61,3 +61,5 @@ Algorithms & Data Structures in Go
 ### [一致性hash算法](algorithms/consistenthash/consistenthash.go)
 * 所有的节点以及其虚拟节点形成一个圆环，根据节点hash值顺序排列成圆环
 * 对请求的key求hash值，找到在圆环中第一个大于该hash值的节点，就让该结点服务
+## 三.动态规划
+### [数字三角形](algorithms/dynamic-programming)

@@ -55,5 +55,7 @@ Algorithms & Data Structures in Go[中文](README_zh.md)
 ### 6.[heap](algorithms/sorting/heap.go)
 ## 二.consistent hash
 ### [consistent hash](algorithms/consistenthash/consistenthash.go)
+## 三.dynamic programming
+### [num triangle](algorithms/dynamic-programming)
 
 
