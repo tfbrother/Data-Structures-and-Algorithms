@@ -65,3 +65,4 @@ Algorithms & Data Structures in Go
 ### [数字三角形](algorithms/dynamic-programming)
 ### [leetcode-91](algorithms/dynamic-programming/91-numDecodings.go)
 ## 四.贪心算法
+### [leetcode-861](algorithms/greedy/861-matrixScore.go)
