@@ -57,5 +57,7 @@ Algorithms & Data Structures in Go[中文](README_zh.md)
 ### [consistent hash](algorithms/consistenthash/consistenthash.go)
 ## 三.dynamic programming
 ### [num triangle](algorithms/dynamic-programming)
+### [leetcode-91](algorithms/dynamic-programming/91-numDecodings.go)
+## 四.greedy algorithm
 
 

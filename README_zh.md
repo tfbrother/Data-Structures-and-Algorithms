@@ -63,3 +63,5 @@ Algorithms & Data Structures in Go
 * 对请求的key求hash值，找到在圆环中第一个大于该hash值的节点，就让该结点服务
 ## 三.动态规划
 ### [数字三角形](algorithms/dynamic-programming)
+### [leetcode-91](algorithms/dynamic-programming/91-numDecodings.go)
+## 四.贪心算法
