@@ -37,8 +37,8 @@ func matrixScore(A [][]int) int {
 	}
 
 	for i := 1; i < column; i++ { // 统计每列中0的数量，只要大于1的数量，就进行翻转
-		num0 := 0 // 记录每列中0的数量差
-		num1 := 0 // 记录每列中1的数量差
+		num0 := 0 // 记录每列中0的数量
+		num1 := 0 // 记录每列中1的数量
 		for j := 0; j < row; j++ {
 			if A[j][i] == 1 {
 				num1++
